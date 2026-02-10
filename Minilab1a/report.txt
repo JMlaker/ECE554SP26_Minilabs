@@ -1,0 +1,9 @@
+To create the Github repository, I first created the repository on the website.
+Then, I cloned it (bypassing the need to use `git init` then setting upstream).
+In the cloned repo, I `cp`ed all the files for Minilab1a into this directory.
+I then used `git add .` in the top level directory to add the directory and all the files.
+After which, I used `git commit -m "[message]" && git push` to upload the files to Github
+
+From the resource usage, we see that the IP uses ~26 less ALMs, has less fan-out, and a lot less logic registers.
+This is expected, as the IP was built and optimized specifically for the FPGAs, whereas the source code
+we implemented was rough at best and unoptimized.
