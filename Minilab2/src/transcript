@@ -1,0 +1,12 @@
+# vsim -c work.conv_tb -do "run -all;quit" 
+# Start time: 17:15:00 on Feb 12,2026
+# Loading sv_std.std
+# Loading work.conv_tb
+# Loading work.conv
+# run -all
+# Break key hit
+# Break in Module conv_tb at conv_tb.sv line 10
+# Stopped at conv_tb.sv line 10
+# quit
+# End time: 17:15:01 on Feb 12,2026, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0

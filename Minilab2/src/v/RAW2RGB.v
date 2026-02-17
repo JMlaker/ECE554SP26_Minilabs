@@ -40,7 +40,8 @@
 //   V1.0 :| Johnny Fan        :| 07/08/01  :|      Initial Revision
 // --------------------------------------------------------------------
 
-module RAW2RGB(	oRed,
+module RAW2RGB(
+        oRed,
 				oGreen,
 				oBlue,
 				oDVAL,
@@ -71,10 +72,18 @@ reg		[12:0]	mCCD_G;
 reg		[11:0]	mCCD_B;
 reg				mDVAL;
 
+assign oRed=(mCCD_R[11:0]+mCCD_G[12:1]+mCCD_B[11:0])/3;
+assign oGreen=oRed;
+assign oBlue=oRed;
+
+/*
 assign	oRed	=	mCCD_R[11:0];
 assign	oGreen	=	mCCD_G[12:1];
 assign	oBlue	=	mCCD_B[11:0];
+*/
 assign	oDVAL	=	mDVAL;
+
+
 
 Line_Buffer1 	u0	(	.clken(iDVAL),
 						.clock(iCLK),

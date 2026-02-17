@@ -1,0 +1,240 @@
+m255
+K4
+z2
+!s11f MIXED_VERSIONS
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/vedaant/school_files/spring2026/ECE554/ECE554SP26_Minilabs/Minilab2/src/v
+vCCD_Capture
+Z1 !s110 1770764108
+!i10b 1
+!s100 OJR9o<d98HinX8>[iZkL]1
+Z2 !s11b Dg1SIo80bB@j0V0VzS_@n1
+I`R]XOXnnbIK0<CjcnFOzj2
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+R0
+Z4 w1770761453
+8CCD_Capture.v
+FCCD_Capture.v
+!i122 2
+L0 43 146
+Z5 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z6 !s108 1770764108.000000
+!s107 VGA_Controller.v|SEG7_LUT.v|SEG7_LUT_6.v|sdram_pll.v|Reset_Delay.v|RAW2RGB.v|Line_Buffer1.v|I2C_Controller.v|I2C_CCD_Config.v|CCD_Capture.v|
+Z7 !s90 CCD_Capture.v|I2C_CCD_Config.v|I2C_Controller.v|Line_Buffer1.v|RAW2RGB.v|Reset_Delay.v|sdram_pll.v|SEG7_LUT_6.v|SEG7_LUT.v|VGA_Controller.v|
+!i113 1
+Z8 tCvgOpt 0
+n@c@c@d_@capture
+vI2C_CCD_Config
+R1
+!i10b 1
+!s100 6M4]:_]5ZITo?O:kD9e9L2
+R2
+I2ceJR8>W>z];BHIFYof_]3
+R3
+R0
+R4
+8I2C_CCD_Config.v
+FI2C_CCD_Config.v
+!i122 2
+L0 43 227
+R5
+r1
+!s85 0
+31
+R6
+Z9 !s107 VGA_Controller.v|SEG7_LUT.v|SEG7_LUT_6.v|sdram_pll.v|Reset_Delay.v|RAW2RGB.v|Line_Buffer1.v|I2C_Controller.v|I2C_CCD_Config.v|CCD_Capture.v|
+R7
+!i113 1
+R8
+n@i2@c_@c@c@d_@config
+vI2C_Controller
+R1
+!i10b 1
+!s100 z^0D>X0bZ8`gOa3gSKUH73
+R2
+IKFl=TS>5P9AFB^nY2QKHN3
+R3
+R0
+R4
+8I2C_Controller.v
+FI2C_Controller.v
+!i122 2
+L0 42 110
+R5
+r1
+!s85 0
+31
+R6
+R9
+R7
+!i113 1
+R8
+n@i2@c_@controller
+vLine_Buffer1
+R1
+!i10b 1
+!s100 DbC>M^igo[n8ziGR@N@023
+R2
+I00RDRHcedK0TR1]hC^j_V3
+R3
+R0
+R4
+8Line_Buffer1.v
+FLine_Buffer1.v
+!i122 2
+L0 39 51
+R5
+r1
+!s85 0
+31
+R6
+R9
+R7
+!i113 1
+R8
+n@line_@buffer1
+vRAW2RGB
+R1
+!i10b 1
+!s100 j]UB04YL6o@GM0PdIiI0U0
+R2
+Im]cd_Ac`fb=jnU6K1^JUf2
+R3
+R0
+w1770764106
+8RAW2RGB.v
+FRAW2RGB.v
+!i122 2
+L0 43 92
+R5
+r1
+!s85 0
+31
+R6
+R9
+R7
+!i113 1
+R8
+n@r@a@w2@r@g@b
+vReset_Delay
+R1
+!i10b 1
+!s100 EQ172RVK>kDk^ck7;kcbR1
+R2
+I]Q?:ajnSiQK2W0@?3@dF<1
+R3
+R0
+R4
+8Reset_Delay.v
+FReset_Delay.v
+!i122 2
+L0 43 40
+R5
+r1
+!s85 0
+31
+R6
+R9
+R7
+!i113 1
+R8
+n@reset_@delay
+vsdram_pll
+R1
+!i10b 1
+!s100 TjIb>^RiIUmcR[QN>Pi]k0
+R2
+I:nUk:XTbF7]IJa5HjXizL1
+R3
+R0
+R4
+8sdram_pll.v
+Fsdram_pll.v
+!i122 2
+L0 8 20
+R5
+r1
+!s85 0
+31
+R6
+R9
+R7
+!i113 1
+R8
+vSEG7_LUT
+R1
+!i10b 1
+!s100 m0J<A2TBVdOkE<bi?iOA83
+R2
+If@HObeXS06dV[_hG^9YM[0
+R3
+R0
+R4
+8SEG7_LUT.v
+FSEG7_LUT.v
+!i122 2
+L0 43 28
+R5
+r1
+!s85 0
+31
+R6
+R9
+R7
+!i113 1
+R8
+n@s@e@g7_@l@u@t
+vSEG7_LUT_6
+R1
+!i10b 1
+!s100 TFPYmHKT8jS`B[Lokz9b[0
+R2
+IloO0QBJ07?=e92zGgMYnA2
+R3
+R0
+R4
+8SEG7_LUT_6.v
+FSEG7_LUT_6.v
+!i122 2
+L0 43 13
+R5
+r1
+!s85 0
+31
+R6
+R9
+R7
+!i113 1
+R8
+n@s@e@g7_@l@u@t_6
+vVGA_Controller
+R1
+!i10b 1
+!s100 <5PTkKLN;G4>O8aYVzR931
+R2
+IoHg9gMLZkKW6j^@F:BB;81
+R3
+R0
+R4
+8VGA_Controller.v
+FVGA_Controller.v
+!i122 2
+L0 43 180
+R5
+r1
+!s85 0
+31
+R6
+R9
+R7
+!i113 1
+R8
+n@v@g@a_@controller

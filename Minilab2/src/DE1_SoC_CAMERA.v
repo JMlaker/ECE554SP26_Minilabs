@@ -281,6 +281,72 @@ begin
 	rCCD_FVAL	<=	D5M_FVAL;
 end
 
+integer i=0;
+reg signed [11:0] row [(1280)+2:0];
+reg signed [16:0] y;
+wire [17:0] y_abs;
+reg [11:0] x_del [(1280)+2:0];
+always@(posedge D5M_PIXLCLK)begin
+  if(!KEY[0])begin
+    y<=13'b0;
+    for(i=0;i<1280+3;i=i+1)begin
+      row[i]<=$signed(12'b0);
+      x_del[i]<='b0;
+    end
+  end
+  else if(mCCD_DVAL) begin
+      row[0]<=$signed(sCCD_R);
+      x_del[0]<=X_Cont;
+    for(i=1;i<(1280)+3;i=i+1)begin
+      row[i]<=row[i-1];
+      //row[i]<=$signed(sCCD_R);
+      x_del[i]<=x_del[i-1];
+    end
+  end
+end
+//assign y_abs = (y[16])?(y):-y;
+
+wire signed [11:0] i_row_0_0;
+wire signed [11:0] i_row_0_1;
+wire signed [11:0] i_row_0_2;
+wire signed [11:0] i_row_1_0;
+wire signed [11:0] i_row_1_1;
+wire signed [11:0] i_row_1_2;
+wire signed [11:0] i_row_2_0;
+wire signed [11:0] i_row_2_1;
+wire signed [11:0] i_row_2_2;
+
+
+assign i_row_0_0=row[(1280)+2];
+assign i_row_0_1=row[(1280)+1];
+assign i_row_0_2=row[(1280)];
+
+assign i_row_1_0=row[1280+2];
+assign i_row_1_1=row[1280+1];
+assign i_row_1_2=row[1280];
+
+assign i_row_2_0=row[2];
+assign i_row_2_1=row[1];
+assign i_row_2_2=row[0];
+
+conv c(
+  .clk(D5M_PIXLCLK),
+  .rst(KEY[0]),
+  .row_0_0({1'b0,i_row_0_0}),
+  .row_0_1({1'b0,i_row_0_1}),
+  .row_0_2({1'b0,i_row_0_2}),
+  .row_1_0({1'b0,i_row_1_0}),
+  .row_1_1({1'b0,i_row_1_1}),
+  .row_1_2({1'b0,i_row_1_2}),
+  .row_2_0({1'b0,i_row_2_0}),
+  .row_2_1({1'b0,i_row_2_1}),
+  .row_2_2({1'b0,i_row_2_2}),
+  .mode(SW[1]),
+  .y_abs(y_abs)
+);
+
+
+
 
 //auto start when power on
 assign auto_start = ((KEY[0])&&(DLY_RST_3)&&(!DLY_RST_4))? 1'b1:1'b0;
@@ -350,7 +416,7 @@ Sdram_Control	   u7	(	//	HOST Side
 							.CLK(sdram_ctrl_clk),
 
 							//	FIFO Write Side 1
-							.WR1_DATA({1'b0,sCCD_G[11:7],sCCD_B[11:2]}),
+.WR1_DATA({1'b0,y_abs[11:7],y_abs[11:2]}),
 							.WR1(sCCD_DVAL),
 							.WR1_ADDR(0),
                      .WR1_MAX_ADDR(640*480),
@@ -359,7 +425,7 @@ Sdram_Control	   u7	(	//	HOST Side
 							.WR1_CLK(~D5M_PIXLCLK),
 
 							//	FIFO Write Side 2
-							.WR2_DATA({1'b0,sCCD_G[6:2],sCCD_R[11:2]}),
+							.WR2_DATA({1'b0,y_abs[6:2],y_abs[11:2]}),
 							.WR2(sCCD_DVAL),
 							.WR2_ADDR(23'h100000),
 							.WR2_MAX_ADDR(23'h100000+640*480),
