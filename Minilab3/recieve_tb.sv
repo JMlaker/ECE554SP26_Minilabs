@@ -36,25 +36,28 @@ recieve iDUT(
   .o_data(o_data)
   );
 
+  logic[7:0] shft_reg;
 
 
   //try showing the reciver a value and then seeing if it acually "read" it in
   //correctly?
   task drive_val(input [7:0] val);
     integer i,j;
+    shft_reg=val;
     //recall that a reciver transmission is done by
     //1) high to low
     //2) at every following b_en, a new value should be present (new bit?)
     //3) remain high
+    $display("called at %t",$time);
 
     //when called, set i_rx from high to low
     i_rx = 1'b0;
     for ( j = 0; j < 16; j = j + 1) @(posedge b_en);
-
     for ( i = 0; i < 8; i = i + 1) begin
-      i_rx = val[i];
       //present some data
       //assumed that data is held for 16 b_en pulses?
+      i_rx=shft_reg[7];
+      shft_reg<=shft_reg<<<1;
       for ( j = 0; j < 16; j = j + 1) begin
         @(posedge b_en);
       end
@@ -62,6 +65,12 @@ recieve iDUT(
 
     i_rx=1'b1;
     for(j=0;j<16;j=j+1)@(posedge b_en);
+    //after this, attempt to read from the module
+    @(posedge b_en)begin
+      if(o_data!=val)begin
+        $display("ERROR: read value:%b, transmitted value:%b",o_data,val);
+      end
+    end
   endtask
 
   //DETERMINE THE BAUD RATE TO TRY AND FEED INTO THE DUT FOR TESTING
@@ -74,7 +83,9 @@ recieve iDUT(
   //improves resolution?). 
   //given that the clock here is set to be 10 ns period, 1*10^8 hz, 100 MHz
   //(100*10^6)?(16*9600)=651.04=651
+  logic[7:0] rand_val;
   initial begin
+    i_rx=1'b1;
     $dumpfile("recieve.vcd");
     $dumpvars(0, recieve_tb);
     i_ioaddr_brg = 2'b11;
@@ -85,7 +96,14 @@ recieve iDUT(
     @(posedge clk);
     i_ioaddr_brg = 2'b00;
     i_brg_bus = 8'hff;
+    repeat(5)begin
+      @(posedge b_en);
+    end
+    $display("what the fuck is going on");
+    repeat(100)begin
+      rand_val=$urandom();
+      drive_val(rand_val);
+    end
 
-    drive_val(8'hab);
   end
 endmodule
