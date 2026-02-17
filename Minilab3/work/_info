@@ -1,0 +1,197 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/vedaant/school_files/spring2026/ECE554/ECE554_spring2026_Minilab/Minilab3
+vbrg
+Z1 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+Z2 !s110 1771340599
+!i10b 1
+!s100 7l8?Kg=bgX[HKXDR?^4kA3
+Z3 !s11b Dg1SIo80bB@j0V0VzS_@n1
+IBe<Kb_o@_LKc>^EcQN_^O1
+Z4 VDg1SIo80bB@j0V0VzS_@n1
+S1
+R0
+w1771331125
+8brg.sv
+Fbrg.sv
+!i122 28
+L0 14 28
+Z5 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z6 !s108 1771340599.000000
+!s107 transmit.sv|recieve_tb.sv|recieve.sv|brg_tb.sv|brg.sv|
+Z7 !s90 brg.sv|brg_tb.sv|recieve.sv|recieve_tb.sv|transmit.sv|
+!i113 1
+Z8 tCvgOpt 0
+vbrg_tb
+R1
+R2
+!i10b 1
+!s100 THoBh2e6PhXR?>ZgYf3Sh0
+R3
+I>:[fSG`Tzo8nmn;E[;1X90
+R4
+S1
+R0
+w1771338340
+8brg_tb.sv
+Fbrg_tb.sv
+!i122 28
+L0 1 66
+R5
+r1
+!s85 0
+31
+R6
+Z9 !s107 transmit.sv|recieve_tb.sv|recieve.sv|brg_tb.sv|brg.sv|
+R7
+!i113 1
+R8
+vdriver
+Z10 !s110 1771301003
+!i10b 1
+!s100 ADz2<Zbg?^;6O`?a6Q_6=3
+R3
+IVDaX08RI`W@0L80DQ58dW0
+R4
+R0
+w1771299788
+8driver.v
+Fdriver.v
+!i122 0
+L0 20 14
+R5
+r1
+!s85 0
+31
+Z11 !s108 1771301003.000000
+Z12 !s107 spart.v|lab1_spart.v|driver.v|
+Z13 !s90 driver.v|lab1_spart.v|spart.v|
+!i113 1
+R8
+vlab1_spart
+R10
+!i10b 1
+!s100 HhT4S75nH[fLLYN4goE4C0
+R3
+I6o92`UjcZ^RUYJGYZR6FZ1
+R4
+R0
+Z14 w1771299771
+8lab1_spart.v
+Flab1_spart.v
+!i122 0
+L0 6 133
+R5
+r1
+!s85 0
+31
+R11
+R12
+R13
+!i113 1
+R8
+vrecieve
+R1
+R2
+!i10b 1
+!s100 S?F0o?jcADcm1AoQno]T92
+R3
+I[7Q_e=;f=6V1AlVVGmn192
+R4
+S1
+R0
+w1771340301
+8recieve.sv
+Frecieve.sv
+!i122 28
+L0 5 128
+R5
+r1
+!s85 0
+31
+R6
+R9
+R7
+!i113 1
+R8
+vrecieve_tb
+R1
+R2
+!i10b 1
+!s100 ?T1:2j?1Hj]7:hW^>YN`73
+R3
+IB<cTCUO_LDa]^;PL8]eLL1
+R4
+S1
+R0
+w1771340596
+8recieve_tb.sv
+Frecieve_tb.sv
+!i122 28
+L0 1 91
+R5
+r1
+!s85 0
+31
+R6
+R9
+R7
+!i113 1
+R8
+vspart
+R10
+!i10b 1
+!s100 c^@_WfihB:aShcQaChNNG0
+R3
+IIW:mBBFTlKK]TD659ILk<3
+R4
+R0
+R14
+8spart.v
+Fspart.v
+!i122 0
+L0 20 15
+R5
+r1
+!s85 0
+31
+R11
+R12
+R13
+!i113 1
+R8
+vtransmit
+R1
+R2
+!i10b 1
+!s100 @b^D_G;;<0fUnDaGDnEV62
+R3
+IKDmL;_ObYoQ8YnFTG9BcB0
+R4
+S1
+R0
+w1771327667
+8transmit.sv
+Ftransmit.sv
+!i122 28
+L0 1 18
+R5
+r1
+!s85 0
+31
+R6
+R9
+R7
+!i113 1
+R8
