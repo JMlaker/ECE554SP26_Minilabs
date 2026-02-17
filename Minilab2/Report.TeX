@@ -1,0 +1,160 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsfonts}
+\usepackage{amstext}
+\usepackage{amsmath}
+\usepackage{currfile}
+\usepackage{fancyhdr}
+\usepackage{amsthm}
+\usepackage{epsfig}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{multirow}
+\usepackage{physics}
+\usepackage{multicol}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{xcolor}
+\usepackage{enumerate} 
+\usepackage{verbatim}
+\usepackage{fancybox}
+\usepackage{wrapfig}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{ulem}
+\usepackage{gensymb}
+\usepackage{hyperref}
+\usepackage{soul}
+\usepackage{listings}
+\usepackage{bookmark}
+\usepackage{dirtree}
+\usepackage[per-mode=symbol]{siunitx}
+\usepackage{xstring}
+\usepackage[framed]{matlab-prettifier}
+\lstset{
+  style              = Matlab-editor,
+  escapechar         = ~,
+  mlshowsectionrules = true,
+  extendedchars = false,
+}
+%include MATLAB code using "lstlisting" environment. For example:
+% \begin{lstlisting}[style=Matlab-editor]
+% A = randn(100); %random matrix
+% \end{lstlisting}
+
+\setcounter{MaxMatrixCols}{10}
+
+
+\pagestyle{headings}
+\markright{\hfill Mlaker, Ferolito, Nookala pg. }
+\setlength{\topmargin}{-0.5in}
+\setlength{\textwidth}{6.5in} \setlength{\textheight}{10in}
+\setlength{\oddsidemargin}{0in} \setlength{\evensidemargin}{0in}
+\parindent=0pt
+
+\addtolength{\oddsidemargin}{-0.5in}
+
+\newcommand{\mM}{\mathcal{M}}
+\newcommand{\mR}{\mathbb{R}}
+\newcommand{\mN}{\mathbb{N}}
+\newcommand{\mC}{\mathbb{C}}
+\newcommand{\mQ}{\mathbb{Q}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\al}{\alpha}
+\newcommand{\li}{l^{\infty}}
+\newcommand{\ep}{\varepsilon}
+\newcommand{\de}{\delta}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\linf}{l^{\infty}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\lsn}{\limsup_{n \to \infty}}
+\newcommand{\lin}{\liminf_{n \to \infty}}
+\newcommand{\Lim}[1]{\raisebox{0.5ex}{\scalebox{0.8}{$\displaystyle \lim_{#1}\;$}}}
+\newcommand{\mat}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\renewcommand{\pmat}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\newcommand{\sys}[1]{\left\{\begin{matrix}#1\end{matrix}\right.}
+\renewcommand{\braket}[2]{\langle#1|#2\rangle}
+\renewcommand{\det}[1]{\begin{vmatrix}#1\end{vmatrix}}
+\renewcommand{\deg}{^\circ}
+\newcommand{\Beta}{\beta}
+\newcommand{\inv}{^{-1}}
+\newcommand{\paran}[1]{\left(#1\right)}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newtheorem{solution}{Solution}
+
+% Angstrom is depricated in sumn or other so this is needed
+\DeclareSIUnit\angstrom{\text {Å}}
+\DeclareSIUnit\molecules{\text {molecules}}
+
+\begin{document}
+
+\noindent
+\begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}c@{\extracolsep{\fill}}r@{}}
+  ECE554 & \textbf{Minilab 2 Report} & Spring 2026 \\
+\end{tabular*}
+
+\vspace{0.5em}
+
+\textit{Group Members:} Josh Mlaker, Michael Ferolito, Vedaant Nookala
+
+\vspace{1em}
+
+{\large\textbf{Implementation:}}\\[0.5em]
+\textbf{Grayscale}: To implement the grayscale, we decided to average the RGB output of the Bayer output, resulting in a very similar, if not identical, result to taking a kernel over the raw camera output.\\[1em]
+\textbf{Convolution}: Our convolution modules takes in a shift register of 2 rows of pixels + 3 extra pixels (totaling 1283 12-bit grayscale values). It then calculates an calculates the convolution by using offsets from the center pixel. That is, for a given convolution, it will use indexes \verb|1282|, \verb|1281|, and \verb|1280| for the top row, \verb|642|, \verb|641|, and \verb|640| for the middle row, and \verb|2|, \verb|1|, and \verb|0| for the bottom row.
+
+\vspace{2em}
+
+{\large\textbf{Testbench:}}\\[0.5em]
+The only testbench used focuses around the convolution module. To test it, we inserted different 3x3 matrices and looked at the outputs, comparing it to an ideal models calculations.\\[1em]
+All other testing was done on the fpga with visual inspection, repeatedly compiling and flashing the board, watching the output on the VGA display.
+
+\vspace{2em}
+
+{\large\textbf{Project Layout:}}
+\dirtree{%
+.1 /.
+.2 src.
+.3 created\_files\DTcomment{Files created by us}.
+.4 conv.sv\DTcomment{Convolution module}.
+.4 conv\_tb.sv\DTcomment{Testbench for convolution module}.
+.3 generated\_files\DTcomment{Files given from original zip}.
+.4 DE1\_SoC\_CAMERA.v\DTcomment{Top level file for camera}.
+.4 DE1\_SoC\_CAMERA.flow.rpt\DTcomment{Quartus flow summary output}.
+.4 v.
+.5 RAW2RGB.v\DTcomment{Bayer to RGB filter, modified to grayscale}.
+.2 Report.TeX\DTcomment{LaTeX file to generate report}.
+.2 Report-Out\DTcomment{LaTeX output}.
+.3 Report.pdf\DTcomment{mklatex output of LaTeX file}.
+.2 Report.pdf\DTcomment{Symlink to mklatex output for top level viewing}.
+.2 imgs\DTcomment{Image folder for LaTeX}.
+}
+\vspace{1em}
+In addition to the \verb|created_files|, \verb|DE1_SoC_CAMERA.v| and \verb|RAW2RGB.v| were changed inside the \verb|generated_files| to complete this Minilab.
+
+\newpage
+
+{\large\textbf{Quartus Flow Summary:}}\\
+\begin{minipage}{0.8\linewidth}
+\includegraphics[scale=0.65]{imgs/FlowSummary.png}
+\captionof{figure}{Flow Summary report from Quartus}
+\end{minipage}\\[1em]
+In the summary, we see a surprisingly low usage of BRAM considering we opted to use a very large shift register inside our design rather than an IP module. The ALM usage is expected considering the amount of values needing to be added between the grayscale calculation and the convolution. It is surprising to see no DSP usage. However, that's likely due to the simpler nature of our math (as we used exact offset for convolution) rather than true matrix multiplication.
+
+\vspace{2em}
+
+{\large\textbf{Difficulties \& Solutions:}}
+\begin{itemize}[wide]
+  \item[\textbf{Problem 1.}] Our first problem was getting a constant black display with no signs of motion.
+  \item[\textbf{Solution 1.}] The solution was an to fix an improper instantiation of the shift register.
+  \item[\textbf{Problem 2.}] The second problem was duplicate images on the VGA display.
+  \item[\textbf{Solution 2.}] To solve this, we delved into the specifics of the RAW2RGB and saw it relied on a ``valid'' signal to determine when to actually send the RGB values. Thus, we only inserted a pixel into the shift register if it was ``valid.''
+\end{itemize}
+
+\end{document}
