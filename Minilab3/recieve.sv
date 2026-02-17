@@ -20,7 +20,7 @@ module recieve (
   localparam READING = 2'b10;
   localparam END_BIT = 2'b11;
   logic [1:0] curr_state, next_state;
-  logic [2:0] counter;
+  logic [3:0] counter;
   //NOTE: n=4, hence oversampling of 16!!!!
   logic [2:0] start_counter;
   logic [3:0] t_counter;
@@ -51,7 +51,7 @@ module recieve (
         else next_state = START_BIT;
       end
       READING: begin
-        if (counter != 3'b111) next_state = READING;
+        if (counter != 4'd8) next_state = READING;
         else next_state = END_BIT;
       end
       END_BIT: begin
@@ -90,7 +90,7 @@ module recieve (
   always @(posedge clk) begin
     if (!rst) begin
       buffer <= 8'b0;
-      counter <= 3'b0;
+      counter <= 4'b0;
       start_counter <= 3'b0;
       t_counter <= 0;
     end else begin
@@ -98,13 +98,13 @@ module recieve (
         case (curr_state)
           IDLE: begin
             buffer <= buffer;
-            counter <= 3'b0;
+            counter <= 4'b0;
             t_counter <= 0;
             start_counter <= 0;
           end
           START_BIT: begin
             buffer <= buffer;
-            counter <= 3'b0;
+            counter <= 4'b0;
             start_counter <= start_counter + 1;
             t_counter <= 0;
           end
