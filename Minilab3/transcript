@@ -1,13 +1,27 @@
 # vsim -c work.recieve_tb -do "run -all;quit" 
-# Start time: 09:03:21 on Feb 17,2026
+# Start time: 17:30:29 on Feb 17,2026
 # Loading sv_std.std
 # Loading work.recieve_tb
 # Loading work.brg
 # Loading work.recieve
 # run -all
+# what the fuck is going on
+# called at                32605
+# called at              1082325
+# called at              2132045
+# called at              3181765
+# called at              4231485
+# called at              5281205
+# called at              6330925
+# called at              7380645
+# called at              8430365
+# called at              9480085
+# called at             10529805
+# called at             11579525
+# called at             12629245
+# called at             13678965
 # Break key hit
-# ** Fatal: (vsim-177) A possible stack overflow is detected!! The stack pointer (0xf689e9e8) is outside the specified stack limit of 8388608 bytes. The current stack usage is 158725656 bytes starting from stack top at 0xffffc000. The current call stack is the following: 
-# 
-# 
-# A total of 0 stack frames are displayed.
-#    Time: 212595 ps  Iteration: 1  Process: /recieve_tb/iDUT/#ALWAYS#70 File: recieve.sv
+# Simulation stop requested.
+# quit
+# End time: 17:30:34 on Feb 17,2026, Elapsed time: 0:00:05
+# Errors: 0, Warnings: 0
