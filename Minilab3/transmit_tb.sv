@@ -59,11 +59,27 @@ module transmit_tb ();
       .o_data(o_data)
   );
 
+  logic tbr_pos_edge;
+  logic tbr_flop;
+  always@(posedge clk)begin
+    if(~rst)begin
+      tbr_pos_edge<=1'b0;
+      tbr_flop<=1'b0;
+    end
+    else begin
+      if(b_en)begin
+        tbr_flop<=o_tbr;
+        tbr_pos_edge<=(~tbr_flop && o_tbr);
+      end
+    end
+  end
+
   //task to load a value into the transmit module
-  task drive_val(logic [7:0] inp_val);
+   task automatic drive_val(logic [7:0] inp_val);
     //initially, transmit module is in the idle state; set the chip select to
     //high, i_iorw to LOW (indicating that it should be recieving a value from
     //the processor)
+    integer i=0;
     i_iorw = 1'b0;
     i_iocs = 1'b1;
     i_data = inp_val;
@@ -71,7 +87,13 @@ module transmit_tb ();
     @(negedge b_en);
     i_iorw = 1'b1;
     i_iocs = 1'b1;
-    repeat(150)@(posedge b_en);
+
+    while(~tbr_pos_edge)begin
+      i=i+1;
+      if(i>200)
+        $error("TBR TOOK TOO LONG: %d PULSES OF b_en",i);
+      @(posedge b_en);
+    end
 
   endtask
 
@@ -99,17 +121,11 @@ module transmit_tb ();
     repeat (5) @(posedge clk);
     //try transmitting something?
     drive_val(8'hAB);
-    repeat(100)@(posedge b_en);
     drive_val(8'hCD);
-    repeat(100)@(posedge b_en);
     drive_val(8'hEF);
-    repeat(100)@(posedge b_en);
     drive_val(8'hFF);
-    repeat(100)@(posedge b_en);
     drive_val(8'hAA);
-    repeat(100)@(posedge b_en);
     drive_val(8'hBB);
-    repeat(100)@(posedge b_en);
   end
 
 
