@@ -31,15 +31,11 @@ module recieve (
 
   always @(posedge clk) begin
     if (!rst) i_rx_reg <= 1'b0;
-    else if(b_en) i_rx_reg <= i_rx;
+    else i_rx_reg <= i_rx;
   end
 
   //next_state logic
   //once we detect a negedge on i_rx, wait 2 baud cycles to transition?
-  wire neg_rx_edge;
-
-  assign neg_rx_edge=(i_rx==1'b0 && i_rx_reg==1'b1);
-  
   always_comb begin
     //idle state
     next_state = 2'b00;
@@ -47,7 +43,7 @@ module recieve (
       //if current state is IDLE and reciever samples a 0, transition to
       //START_BIT
       IDLE: begin
-        if (neg_rx_edge) next_state = START_BIT;
+        if (i_rx == 1'b0 && i_rx_reg == 1'b1) next_state = START_BIT;
         else next_state = IDLE;
       end
       START_BIT: begin
@@ -76,8 +72,7 @@ module recieve (
     else begin
       if (b_en) begin
         if (curr_state == END_BIT && next_state == IDLE) rda <= 1'b1;
-        //if (i_iocs && i_iorw == 1'b1) rda <= 1'b0;
-        else rda<=1'b0;
+        if (i_iocs && i_iorw == 1'b1) rda <= 1'b0;
       end
     end
   end
@@ -117,7 +112,7 @@ module recieve (
             start_counter <= 0;
             //check to be in the middle of the bit
             if (t_counter == 4'b1111) begin
-              buffer <= {i_rx,buffer[7:1]};
+              buffer <= {buffer[6:0], i_rx};
               counter <= counter + 1;
               t_counter <= 0;
             end else begin

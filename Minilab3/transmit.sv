@@ -37,7 +37,7 @@ module transmit (
 
   always @(posedge clk) begin
     if (!rst) curr_state <= 2'b00;
-    else if (b_en) curr_state <= next_state;
+    else curr_state <= next_state;
   end
 
   always_comb begin
@@ -87,7 +87,7 @@ module transmit (
       counter <= 4'b0;
       start_counter <= 4'b0;
       t_counter <= 4'b0;
-      buffer <= 7'b0;
+      buffer <= 4'b0;
     end else begin
       if (b_en) begin
         case (curr_state)
@@ -100,7 +100,7 @@ module transmit (
             if (i_iocs && i_iorw) begin
               buffer <= i_data;
             end else begin
-              buffer <= 7'b0;
+              buffer <= 4'b0;
             end
           end
           //transmit a 16 buad-pulse long 0 bit?
@@ -108,7 +108,7 @@ module transmit (
             counter <= 4'b0;
             start_counter <= start_counter + 1;
             t_counter <= 4'b0;
-            buffer<=buffer;
+            buffer <= 4'b0;
           end
           TRANSMIT: begin
             start_counter <= 4'b0;
@@ -120,7 +120,6 @@ module transmit (
             end
           end
           END_BIT: begin
-            counter<='b0;
             start_counter <= start_counter + 1;
             t_counter <= 4'b0;
           end
