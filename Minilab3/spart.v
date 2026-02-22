@@ -42,10 +42,10 @@ assign dbt = databus;
 wire[7:0] dbr;
 
 transmit TX(
-    .clk,
+    .clk(clk),
     .i_data(dbt),
-    .rst,
-    .b_en,
+    .rst(!rst),
+    .b_en(b_en),
     .i_iocs(iocs),
     .o_tx(txd),
     .i_iorw(~iorw && (ioaddr == 2'b00)),
@@ -53,9 +53,9 @@ transmit TX(
 );
 
 recieve RX(
-    .clk,
-    .b_en,
-    .rst,
+    .clk(clk),
+    .b_en(b_en),
+    .rst(!rst),
     .i_iocs(iocs),
     .i_rx(rxd),
     .i_iorw(iorw && (ioaddr == 2'b00)),
@@ -64,11 +64,11 @@ recieve RX(
 );
 
 brg baud_gen(
-    .clk,
-    .rst,
+    .clk(clk),
+    .rst(rst),
     .i_ioaddr_brg(ioaddr),
-    i_brg_bus(databus),
-    en(b_en)
+    .i_brg_bus(databus),
+    .en(b_en)
 );
 
 // Processor <-> SPART interface
