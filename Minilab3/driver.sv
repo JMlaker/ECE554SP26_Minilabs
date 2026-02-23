@@ -39,7 +39,7 @@ logic stash_databus;
 
 logic [7:0] save_databus;
 
-assert iocs = 1'b1; // assumed held high
+assign iocs = 1'b1; // assumed held high
 
 generate
     case (br_cfg)
@@ -102,7 +102,7 @@ always_comb begin
                 ioaddr = 2'b00;
                 iorw = 1'b0;
                 databus = stash_databus;
-                nxt_state = TX
+                nxt_state = TX;
             end
         end
 
@@ -121,7 +121,7 @@ end
 always_ff @(posedge clk, posedge rst) begin
     if (rst)
         save_databus = 'b0;
-    else if (stash_databus = 1'b1)
+    else if (stash_databus == 1'b1)
         save_databus = databus;
     else
         save_databus = save_databus;
