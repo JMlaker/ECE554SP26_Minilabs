@@ -32,6 +32,8 @@ module lab1_spart(
     inout       [35:0]  GPIO
 );
 
+assign GPIO[0] = b_en;
+
 wire txd;
 wire rxd;
 wire iocs;
@@ -48,7 +50,9 @@ wire rst = ~KEY[0];
 // LED[9] : indicator for RX signal
 // LED[8] : indicator for TX signal
 // LED[0] : indicator for rst signal 
-assign LEDR = {~rxd,txd,rda,tbr,5'b0,rst};
+assign LEDR = {~rda,~tbr,7'b0,rst};
+//assign LEDR = databus;
+
 
 // GPIO[3] as TX output, GPIO[5] as RX input
 assign GPIO[3] = txd;
@@ -56,6 +60,8 @@ assign rxd = GPIO[5];
 
 // slide switch [9:8] as baudrate config
 assign br_cfg = SW[9:8];
+
+wire b_en;
 
 // Instantiate your spart here
 spart spart0(   .clk(CLOCK_50),
@@ -67,7 +73,8 @@ spart spart0(   .clk(CLOCK_50),
                 .ioaddr(ioaddr),
                 .databus(databus),
                 .txd(txd),
-                .rxd(rxd)
+                .rxd(rxd),
+					 .b_en(b_en)
             );
 
 // Instantiate your driver here

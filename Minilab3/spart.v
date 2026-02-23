@@ -27,15 +27,14 @@ module spart(
     input [1:0] ioaddr,
     inout [7:0] databus,
     output txd,
-    input rxd
+    input rxd,
+	 output wire b_en
     );
 
 `define REGSELECT_TXRXBUF 2'b00
 `define REGSELECT_STAT 2'b01
 `define REGSELECT_DBL 2'b10
 `define REGSELECT_DBH 2'b11
-
-wire b_en;
 
 wire[7:0] dbt;
 assign dbt = databus;
@@ -65,7 +64,7 @@ recieve RX(
 
 brg baud_gen(
     .clk(clk),
-    .rst(rst),
+    .rst(!rst),
     .i_ioaddr_brg(ioaddr),
     .i_brg_bus(databus),
     .en(b_en)

@@ -21,7 +21,7 @@ module brg (
   reg [15:0] div_buf;
   reg [15:0] down_counter;
   always @(posedge clk) begin
-    if (!rst) div_buf <= 16'b0;
+    if (!rst) div_buf <= 16'd0;
     else begin
       if (i_ioaddr_brg == 2'b11) begin
         div_buf[15:8] <= i_brg_bus;

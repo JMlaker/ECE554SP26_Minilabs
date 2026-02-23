@@ -1,5 +1,5 @@
 Analysis & Synthesis report for lab1_spart
-Sun Feb 22 19:02:23 2026
+Sun Feb 22 22:16:41 2026
 Quartus Prime Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
 
 
@@ -15,9 +15,9 @@ Quartus Prime Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
   7. Analysis & Synthesis Resource Utilization by Entity
   8. State Machine - |lab1_spart|driver:driver0|state
   9. State Machine - |lab1_spart|spart:spart0|recieve:RX|curr_state
- 10. State Machine - |lab1_spart|spart:spart0|transmit:TX|curr_state
- 11. Registers Removed During Synthesis
- 12. General Register Statistics
+ 10. Registers Removed During Synthesis
+ 11. General Register Statistics
+ 12. Inverted Register Statistics
  13. Multiplexer Restructuring Statistics (Restructuring Performed)
  14. Post-Synthesis Netlist Statistics for Top Partition
  15. Elapsed Time Per Partition
@@ -49,13 +49,13 @@ on the Quartus Prime software download page.
 +-----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Sun Feb 22 19:02:23 2026           ;
+; Analysis & Synthesis Status     ; Successful - Sun Feb 22 22:16:41 2026           ;
 ; Quartus Prime Version           ; 25.1std.0 Build 1129 10/21/2025 SC Lite Edition ;
 ; Revision Name                   ; lab1_spart                                      ;
 ; Top-level Entity Name           ; lab1_spart                                      ;
 ; Family                          ; Cyclone V                                       ;
 ; Logic utilization (in ALMs)     ; N/A                                             ;
-; Total registers                 ; 87                                              ;
+; Total registers                 ; 90                                              ;
 ; Total pins                      ; 106                                             ;
 ; Total virtual pins              ; 0                                               ;
 ; Total block memory bits         ; 0                                               ;
@@ -178,10 +178,10 @@ on the Quartus Prime software download page.
 +----------------------------------+-----------------+------------------------------+--------------------------------------------------------------------+---------+
 ; File Name with User-Entered Path ; Used in Netlist ; File Type                    ; File Name with Absolute Path                                       ; Library ;
 +----------------------------------+-----------------+------------------------------+--------------------------------------------------------------------+---------+
+; recieve2.sv                      ; yes             ; User SystemVerilog HDL File  ; /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/recieve2.sv  ;         ;
 ; driver.sv                        ; yes             ; User SystemVerilog HDL File  ; /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/driver.sv    ;         ;
 ; transmit.sv                      ; yes             ; User SystemVerilog HDL File  ; /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/transmit.sv  ;         ;
 ; spart.v                          ; yes             ; User Verilog HDL File        ; /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/spart.v      ;         ;
-; recieve.sv                       ; yes             ; User SystemVerilog HDL File  ; /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/recieve.sv   ;         ;
 ; lab1_spart.v                     ; yes             ; User Verilog HDL File        ; /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v ;         ;
 ; brg.sv                           ; yes             ; User SystemVerilog HDL File  ; /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/brg.sv       ;         ;
 +----------------------------------+-----------------+------------------------------+--------------------------------------------------------------------+---------+
@@ -192,25 +192,25 @@ on the Quartus Prime software download page.
 +---------------------------------------------+----------------+
 ; Resource                                    ; Usage          ;
 +---------------------------------------------+----------------+
-; Estimate of Logic utilization (ALMs needed) ; 80             ;
+; Estimate of Logic utilization (ALMs needed) ; 96             ;
 ;                                             ;                ;
-; Combinational ALUT usage for logic          ; 121            ;
-;     -- 7 input functions                    ; 2              ;
-;     -- 6 input functions                    ; 34             ;
-;     -- 5 input functions                    ; 26             ;
-;     -- 4 input functions                    ; 22             ;
-;     -- <=3 input functions                  ; 37             ;
+; Combinational ALUT usage for logic          ; 147            ;
+;     -- 7 input functions                    ; 0              ;
+;     -- 6 input functions                    ; 42             ;
+;     -- 5 input functions                    ; 31             ;
+;     -- 4 input functions                    ; 27             ;
+;     -- <=3 input functions                  ; 47             ;
 ;                                             ;                ;
-; Dedicated logic registers                   ; 87             ;
+; Dedicated logic registers                   ; 90             ;
 ;                                             ;                ;
 ; I/O pins                                    ; 106            ;
 ;                                             ;                ;
 ; Total DSP Blocks                            ; 0              ;
 ;                                             ;                ;
 ; Maximum fan-out node                        ; CLOCK_50~input ;
-; Maximum fan-out                             ; 87             ;
-; Total fan-out                               ; 978            ;
-; Average fan-out                             ; 2.14           ;
+; Maximum fan-out                             ; 90             ;
+; Total fan-out                               ; 1090           ;
+; Average fan-out                             ; 2.25           ;
 +---------------------------------------------+----------------+
 
 
@@ -219,28 +219,29 @@ on the Quartus Prime software download page.
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------------------------+-------------+--------------+
 ; Compilation Hierarchy Node ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                   ; Entity Name ; Library Name ;
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------------------------+-------------+--------------+
-; |lab1_spart                ; 121 (21)            ; 87 (0)                    ; 0                 ; 0          ; 106  ; 0            ; |lab1_spart                           ; lab1_spart  ; work         ;
-;    |driver:driver0|        ; 6 (6)               ; 5 (5)                     ; 0                 ; 0          ; 0    ; 0            ; |lab1_spart|driver:driver0            ; driver      ; work         ;
-;    |spart:spart0|          ; 94 (2)              ; 82 (0)                    ; 0                 ; 0          ; 0    ; 0            ; |lab1_spart|spart:spart0              ; spart       ; work         ;
-;       |brg:baud_gen|       ; 42 (42)             ; 32 (32)                   ; 0                 ; 0          ; 0    ; 0            ; |lab1_spart|spart:spart0|brg:baud_gen ; brg         ; work         ;
+; |lab1_spart                ; 147 (40)            ; 90 (0)                    ; 0                 ; 0          ; 106  ; 0            ; |lab1_spart                           ; lab1_spart  ; work         ;
+;    |driver:driver0|        ; 10 (10)             ; 14 (14)                   ; 0                 ; 0          ; 0    ; 0            ; |lab1_spart|driver:driver0            ; driver      ; work         ;
+;    |spart:spart0|          ; 97 (4)              ; 76 (0)                    ; 0                 ; 0          ; 0    ; 0            ; |lab1_spart|spart:spart0              ; spart       ; work         ;
+;       |brg:baud_gen|       ; 43 (43)             ; 32 (32)                   ; 0                 ; 0          ; 0    ; 0            ; |lab1_spart|spart:spart0|brg:baud_gen ; brg         ; work         ;
 ;       |recieve:RX|         ; 24 (24)             ; 25 (25)                   ; 0                 ; 0          ; 0    ; 0            ; |lab1_spart|spart:spart0|recieve:RX   ; recieve     ; work         ;
-;       |transmit:TX|        ; 26 (26)             ; 25 (25)                   ; 0                 ; 0          ; 0    ; 0            ; |lab1_spart|spart:spart0|transmit:TX  ; transmit    ; work         ;
+;       |transmit:TX|        ; 26 (26)             ; 19 (19)                   ; 0                 ; 0          ; 0    ; 0            ; |lab1_spart|spart:spart0|transmit:TX  ; transmit    ; work         ;
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------------------------+-------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
 
 Encoding Type:  One-Hot
-+------------------------------------------------------------------------------------------------------+
-; State Machine - |lab1_spart|driver:driver0|state                                                     ;
-+--------------------+----------+----------+------------------+-------------------+--------------------+
-; Name               ; state.TX ; state.RX ; state.POLL_TX_RX ; state.DIV_BUF_LOW ; state.DIV_BUF_HIGH ;
-+--------------------+----------+----------+------------------+-------------------+--------------------+
-; state.DIV_BUF_HIGH ; 0        ; 0        ; 0                ; 0                 ; 0                  ;
-; state.DIV_BUF_LOW  ; 0        ; 0        ; 0                ; 1                 ; 1                  ;
-; state.POLL_TX_RX   ; 0        ; 0        ; 1                ; 0                 ; 1                  ;
-; state.RX           ; 0        ; 1        ; 0                ; 0                 ; 1                  ;
-; state.TX           ; 1        ; 0        ; 0                ; 0                 ; 1                  ;
-+--------------------+----------+----------+------------------+-------------------+--------------------+
++-----------------------------------------------------------------------------------------------------------------------+
+; State Machine - |lab1_spart|driver:driver0|state                                                                      ;
++--------------------+----------+----------+------------------+-------------------+--------------------+----------------+
+; Name               ; state.TX ; state.RX ; state.POLL_TX_RX ; state.DIV_BUF_LOW ; state.DIV_BUF_HIGH ; state.TMP_DONE ;
++--------------------+----------+----------+------------------+-------------------+--------------------+----------------+
+; state.DIV_BUF_HIGH ; 0        ; 0        ; 0                ; 0                 ; 0                  ; 0              ;
+; state.DIV_BUF_LOW  ; 0        ; 0        ; 0                ; 1                 ; 1                  ; 0              ;
+; state.POLL_TX_RX   ; 0        ; 0        ; 1                ; 0                 ; 1                  ; 0              ;
+; state.RX           ; 0        ; 1        ; 0                ; 0                 ; 1                  ; 0              ;
+; state.TX           ; 1        ; 0        ; 0                ; 0                 ; 1                  ; 0              ;
+; state.TMP_DONE     ; 0        ; 0        ; 0                ; 0                 ; 1                  ; 1              ;
++--------------------+----------+----------+------------------+-------------------+--------------------+----------------+
 
 
 Encoding Type:  One-Hot
@@ -256,34 +257,19 @@ Encoding Type:  One-Hot
 +----------------------+--------------------+--------------------+----------------------+-----------------+
 
 
-Encoding Type:  One-Hot
-+--------------------------------------------------------------------------------------------------------+
-; State Machine - |lab1_spart|spart:spart0|transmit:TX|curr_state                                        ;
-+----------------------+--------------------+---------------------+----------------------+---------------+
-; Name                 ; curr_state.END_BIT ; curr_state.TRANSMIT ; curr_state.START_BIT ; curr_state.00 ;
-+----------------------+--------------------+---------------------+----------------------+---------------+
-; curr_state.00        ; 0                  ; 0                   ; 0                    ; 0             ;
-; curr_state.START_BIT ; 0                  ; 0                   ; 1                    ; 1             ;
-; curr_state.TRANSMIT  ; 0                  ; 1                   ; 0                    ; 1             ;
-; curr_state.END_BIT   ; 1                  ; 0                   ; 0                    ; 1             ;
-+----------------------+--------------------+---------------------+----------------------+---------------+
-
-
-+------------------------------------------------------------+
-; Registers Removed During Synthesis                         ;
-+---------------------------------------+--------------------+
-; Register name                         ; Reason for Removal ;
-+---------------------------------------+--------------------+
-; driver:driver0|state~4                ; Lost fanout        ;
-; driver:driver0|state~5                ; Lost fanout        ;
-; driver:driver0|state~6                ; Lost fanout        ;
-; driver:driver0|state~7                ; Lost fanout        ;
-; spart:spart0|recieve:RX|curr_state~2  ; Lost fanout        ;
-; spart:spart0|recieve:RX|curr_state~3  ; Lost fanout        ;
-; spart:spart0|transmit:TX|curr_state~6 ; Lost fanout        ;
-; spart:spart0|transmit:TX|curr_state~7 ; Lost fanout        ;
-; Total Number of Removed Registers = 8 ;                    ;
-+---------------------------------------+--------------------+
++---------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                              ;
++----------------------------------------+----------------------------------------+
+; Register name                          ; Reason for Removal                     ;
++----------------------------------------+----------------------------------------+
+; spart:spart0|transmit:TX|state[1..31]  ; Stuck at GND due to stuck port data_in ;
+; driver:driver0|state~4                 ; Lost fanout                            ;
+; driver:driver0|state~5                 ; Lost fanout                            ;
+; driver:driver0|state~6                 ; Lost fanout                            ;
+; spart:spart0|recieve:RX|curr_state~2   ; Lost fanout                            ;
+; spart:spart0|recieve:RX|curr_state~3   ; Lost fanout                            ;
+; Total Number of Removed Registers = 36 ;                                        ;
++----------------------------------------+----------------------------------------+
 
 
 +------------------------------------------------------+
@@ -291,14 +277,28 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 87    ;
-; Number of registers using Synchronous Clear  ; 46    ;
-; Number of registers using Synchronous Load   ; 0     ;
-; Number of registers using Asynchronous Clear ; 5     ;
+; Total registers                              ; 90    ;
+; Number of registers using Synchronous Clear  ; 33    ;
+; Number of registers using Synchronous Load   ; 9     ;
+; Number of registers using Asynchronous Clear ; 20    ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 74    ;
+; Number of registers using Clock Enable       ; 72    ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
+
+
++--------------------------------------------------+
+; Inverted Register Statistics                     ;
++----------------------------------------+---------+
+; Inverted Register                      ; Fan out ;
++----------------------------------------+---------+
+; spart:spart0|transmit:TX|o_tbr         ; 8       ;
+; driver:driver0|save_databus[4]         ; 1       ;
+; driver:driver0|save_databus[6]         ; 1       ;
+; driver:driver0|save_databus[2]         ; 1       ;
+; driver:driver0|save_databus[0]         ; 1       ;
+; Total number of inverted registers = 5 ;         ;
++----------------------------------------+---------+
 
 
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -306,21 +306,21 @@ Encoding Type:  One-Hot
 +--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                             ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------------+
-; 3:1                ; 14 bits   ; 28 LEs        ; 0 LEs                ; 28 LEs                 ; Yes        ; |lab1_spart|spart:spart0|recieve:RX|counter[0]         ;
+; 3:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; Yes        ; |lab1_spart|spart:spart0|recieve:RX|counter[2]         ;
 ; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |lab1_spart|spart:spart0|brg:baud_gen|down_counter[0]  ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |lab1_spart|spart:spart0|recieve:RX|buffer[2]          ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |lab1_spart|spart:spart0|brg:baud_gen|div_buf[1]       ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |lab1_spart|spart:spart0|transmit:TX|divcnt[3]         ;
 ; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |lab1_spart|spart:spart0|brg:baud_gen|div_buf[15]      ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |lab1_spart|spart:spart0|brg:baud_gen|down_counter[12] ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |lab1_spart|spart:spart0|transmit:TX|buffer[2]         ;
-; 5:1                ; 4 bits    ; 12 LEs        ; 8 LEs                ; 4 LEs                  ; Yes        ; |lab1_spart|spart:spart0|transmit:TX|counter[0]        ;
-; 5:1                ; 4 bits    ; 12 LEs        ; 8 LEs                ; 4 LEs                  ; Yes        ; |lab1_spart|spart:spart0|transmit:TX|t_counter[3]      ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |lab1_spart|spart:spart0|brg:baud_gen|div_buf[2]       ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |lab1_spart|spart:spart0|recieve:RX|buffer[5]          ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |lab1_spart|spart:spart0|brg:baud_gen|down_counter[15] ;
+; 4:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |lab1_spart|spart:spart0|transmit:TX|tx_shft_reg[1]    ;
 ; 5:1                ; 4 bits    ; 12 LEs        ; 8 LEs                ; 4 LEs                  ; Yes        ; |lab1_spart|spart:spart0|recieve:RX|t_counter[1]       ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |lab1_spart|spart:spart0|transmit:TX|curr_state        ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |lab1_spart|databus[5]                                 ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |lab1_spart|databus[1]                                 ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; No         ; |lab1_spart|driver:driver0|Selector11                  ;
-; 6:1                ; 2 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |lab1_spart|databus[6]                                 ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |lab1_spart|spart:spart0|recieve:RX|curr_state         ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 12 LEs               ; 0 LEs                  ; No         ; |lab1_spart|databus[2]                                 ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |lab1_spart|databus[3]                                 ;
+; 7:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |lab1_spart|driver:driver0|Selector4                   ;
+; 9:1                ; 2 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; No         ; |lab1_spart|driver:driver0|Selector6                   ;
+; 8:1                ; 2 bits    ; 10 LEs        ; 6 LEs                ; 4 LEs                  ; No         ; |lab1_spart|driver:driver0|Selector3                   ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------------+
 
 
@@ -329,29 +329,30 @@ Encoding Type:  One-Hot
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; arriav_ff             ; 87                          ;
-;     CLR               ; 5                           ;
-;     ENA               ; 28                          ;
-;     ENA SCLR          ; 46                          ;
+; arriav_ff             ; 90                          ;
+;     CLR               ; 8                           ;
+;     ENA               ; 20                          ;
+;     ENA CLR           ; 12                          ;
+;     ENA SCLR          ; 33                          ;
+;     ENA SLD           ; 7                           ;
+;     SLD               ; 2                           ;
 ;     plain             ; 8                           ;
 ; arriav_io_obuf        ; 36                          ;
-; arriav_lcell_comb     ; 128                         ;
+; arriav_lcell_comb     ; 154                         ;
 ;     arith             ; 16                          ;
 ;         1 data inputs ; 16                          ;
-;     extend            ; 2                           ;
-;         7 data inputs ; 2                           ;
-;     normal            ; 110                         ;
+;     normal            ; 138                         ;
 ;         0 data inputs ; 2                           ;
-;         1 data inputs ; 7                           ;
-;         2 data inputs ; 8                           ;
-;         3 data inputs ; 11                          ;
-;         4 data inputs ; 22                          ;
-;         5 data inputs ; 26                          ;
-;         6 data inputs ; 34                          ;
+;         1 data inputs ; 10                          ;
+;         2 data inputs ; 13                          ;
+;         3 data inputs ; 13                          ;
+;         4 data inputs ; 27                          ;
+;         5 data inputs ; 31                          ;
+;         6 data inputs ; 42                          ;
 ; boundary_port         ; 106                         ;
 ;                       ;                             ;
-; Max LUT depth         ; 3.50                        ;
-; Average LUT depth     ; 1.95                        ;
+; Max LUT depth         ; 4.00                        ;
+; Average LUT depth     ; 2.25                        ;
 +-----------------------+-----------------------------+
 
 
@@ -370,19 +371,21 @@ Encoding Type:  One-Hot
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
-    Info: Processing started: Sun Feb 22 19:02:19 2026
+    Info: Processing started: Sun Feb 22 22:16:36 2026
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off lab1_spart -c lab1_spart
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 8 of the 8 processors detected
+Info (12021): Found 1 design units, including 1 entities, in source file recieve2.sv
+    Info (12023): Found entity 1: recieve File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/recieve2.sv Line: 5
 Info (12021): Found 1 design units, including 1 entities, in source file driver.sv
     Info (12023): Found entity 1: driver File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/driver.sv Line: 20
 Info (12021): Found 1 design units, including 1 entities, in source file transmit.sv
-    Info (12023): Found entity 1: transmit File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/transmit.sv Line: 1
+    Info (12023): Found entity 1: transmit File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/transmit.sv Line: 3
 Info (12021): Found 0 design units, including 0 entities, in source file top_tb.sv
 Info (12021): Found 1 design units, including 1 entities, in source file spart.v
     Info (12023): Found entity 1: spart File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/spart.v Line: 20
 Info (12021): Found 1 design units, including 1 entities, in source file recieve.sv
-    Info (12023): Found entity 1: recieve File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/recieve.sv Line: 5
+    Info (12023): Found entity 1: recieve_bak File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/recieve.sv Line: 3
 Info (12021): Found 1 design units, including 1 entities, in source file lab1_spart.v
     Info (12023): Found entity 1: lab1_spart File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 6
 Info (12021): Found 1 design units, including 1 entities, in source file brg_tb.sv
@@ -390,36 +393,34 @@ Info (12021): Found 1 design units, including 1 entities, in source file brg_tb.
 Info (12021): Found 1 design units, including 1 entities, in source file brg.sv
     Info (12023): Found entity 1: brg File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/brg.sv Line: 14
 Info (12127): Elaborating entity "lab1_spart" for the top level hierarchy
-Info (12128): Elaborating entity "spart" for hierarchy "spart:spart0" File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 71
-Warning (10230): Verilog HDL assignment warning at spart.v(85): truncated value with size 32 to match size of target (8) File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/spart.v Line: 85
-Info (12128): Elaborating entity "transmit" for hierarchy "spart:spart0|transmit:TX" File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/spart.v Line: 53
-Warning (10230): Verilog HDL assignment warning at transmit.sv(109): truncated value with size 32 to match size of target (4) File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/transmit.sv Line: 109
-Warning (10230): Verilog HDL assignment warning at transmit.sv(116): truncated value with size 32 to match size of target (4) File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/transmit.sv Line: 116
-Warning (10230): Verilog HDL assignment warning at transmit.sv(119): truncated value with size 32 to match size of target (4) File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/transmit.sv Line: 119
-Warning (10230): Verilog HDL assignment warning at transmit.sv(124): truncated value with size 32 to match size of target (4) File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/transmit.sv Line: 124
-Info (12128): Elaborating entity "recieve" for hierarchy "spart:spart0|recieve:RX" File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/spart.v Line: 64
-Warning (10230): Verilog HDL assignment warning at recieve.sv(113): truncated value with size 32 to match size of target (3) File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/recieve.sv Line: 113
-Warning (10230): Verilog HDL assignment warning at recieve.sv(121): truncated value with size 32 to match size of target (4) File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/recieve.sv Line: 121
-Warning (10230): Verilog HDL assignment warning at recieve.sv(124): truncated value with size 32 to match size of target (4) File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/recieve.sv Line: 124
-Warning (10230): Verilog HDL assignment warning at recieve.sv(129): truncated value with size 32 to match size of target (3) File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/recieve.sv Line: 129
-Info (12128): Elaborating entity "brg" for hierarchy "spart:spart0|brg:baud_gen" File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/spart.v Line: 72
+Info (12128): Elaborating entity "spart" for hierarchy "spart:spart0" File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 78
+Warning (10230): Verilog HDL assignment warning at spart.v(84): truncated value with size 32 to match size of target (8) File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/spart.v Line: 84
+Info (12128): Elaborating entity "transmit" for hierarchy "spart:spart0|transmit:TX" File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/spart.v Line: 52
+Warning (10036): Verilog HDL or VHDL warning at transmit.sv(17): object "transmitting" assigned a value but never read File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/transmit.sv Line: 17
+Warning (10230): Verilog HDL assignment warning at transmit.sv(41): truncated value with size 32 to match size of target (4) File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/transmit.sv Line: 41
+Info (12128): Elaborating entity "recieve" for hierarchy "spart:spart0|recieve:RX" File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/spart.v Line: 63
+Warning (10230): Verilog HDL assignment warning at recieve2.sv(113): truncated value with size 32 to match size of target (3) File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/recieve2.sv Line: 113
+Warning (10230): Verilog HDL assignment warning at recieve2.sv(121): truncated value with size 32 to match size of target (4) File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/recieve2.sv Line: 121
+Warning (10230): Verilog HDL assignment warning at recieve2.sv(124): truncated value with size 32 to match size of target (4) File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/recieve2.sv Line: 124
+Warning (10230): Verilog HDL assignment warning at recieve2.sv(129): truncated value with size 32 to match size of target (3) File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/recieve2.sv Line: 129
+Info (12128): Elaborating entity "brg" for hierarchy "spart:spart0|brg:baud_gen" File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/spart.v Line: 71
 Warning (10230): Verilog HDL assignment warning at brg.sv(35): truncated value with size 32 to match size of target (16) File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/brg.sv Line: 35
-Info (12128): Elaborating entity "driver" for hierarchy "driver:driver0" File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 83
+Info (12128): Elaborating entity "driver" for hierarchy "driver:driver0" File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 90
 Warning (10230): Verilog HDL assignment warning at driver.sv(71): truncated value with size 32 to match size of target (8) File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/driver.sv Line: 71
 Warning (13046): Tri-state node(s) do not directly drive top-level pin(s)
-    Warning (13048): Converted tri-state node "databus[7]" into a selector File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/transmit.sv Line: 25
-    Warning (13048): Converted tri-state node "databus[6]" into a selector File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/transmit.sv Line: 25
-    Warning (13048): Converted tri-state node "databus[5]" into a selector File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/transmit.sv Line: 25
-    Warning (13048): Converted tri-state node "databus[4]" into a selector File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/transmit.sv Line: 25
-    Warning (13048): Converted tri-state node "databus[3]" into a selector File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/transmit.sv Line: 25
-    Warning (13048): Converted tri-state node "databus[2]" into a selector File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/transmit.sv Line: 25
-    Warning (13048): Converted tri-state node "databus[1]" into a selector File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/transmit.sv Line: 25
-    Warning (13048): Converted tri-state node "databus[0]" into a selector File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/transmit.sv Line: 25
+    Warning (13048): Converted tri-state node "databus[7]" into a selector File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/driver.sv Line: 148
+    Warning (13048): Converted tri-state node "databus[6]" into a selector File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/driver.sv Line: 148
+    Warning (13048): Converted tri-state node "databus[5]" into a selector File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/driver.sv Line: 148
+    Warning (13048): Converted tri-state node "databus[4]" into a selector File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/driver.sv Line: 148
+    Warning (13048): Converted tri-state node "databus[3]" into a selector File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/driver.sv Line: 148
+    Warning (13048): Converted tri-state node "databus[2]" into a selector File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/driver.sv Line: 148
+    Warning (13048): Converted tri-state node "databus[1]" into a selector File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/driver.sv Line: 148
+    Warning (13048): Converted tri-state node "databus[0]" into a selector File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/driver.sv Line: 148
 Warning (13034): The following nodes have both tri-state and non-tri-state drivers
+    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO[0]" and its non-tri-state driver. File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 33
     Warning (13035): Inserted always-enabled tri-state buffer between "GPIO[3]" and its non-tri-state driver. File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 33
 Warning (13039): The following bidirectional pins have no drivers
     Warning (13040): bidirectional pin "GPIO[5]" has no driver File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 33
-    Warning (13040): bidirectional pin "GPIO[0]" has no driver File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 33
     Warning (13040): bidirectional pin "GPIO[1]" has no driver File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 33
     Warning (13040): bidirectional pin "GPIO[2]" has no driver File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 33
     Warning (13040): bidirectional pin "GPIO[4]" has no driver File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 33
@@ -454,6 +455,7 @@ Warning (13039): The following bidirectional pins have no drivers
     Warning (13040): bidirectional pin "GPIO[34]" has no driver File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 33
     Warning (13040): bidirectional pin "GPIO[35]" has no driver File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 33
 Warning (13009): TRI or OPNDRN buffers permanently enabled
+    Warning (13010): Node "GPIO[0]~synth" File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 33
     Warning (13010): Node "GPIO[3]~synth" File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 33
 Warning (13024): Output pins are stuck at VCC or GND
     Warning (13410): Pin "HEX0[0]" is stuck at GND File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 15
@@ -489,9 +491,10 @@ Warning (13024): Output pins are stuck at VCC or GND
     Warning (13410): Pin "LEDR[3]" is stuck at GND File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 26
     Warning (13410): Pin "LEDR[4]" is stuck at GND File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 26
     Warning (13410): Pin "LEDR[5]" is stuck at GND File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 26
+    Warning (13410): Pin "LEDR[6]" is stuck at GND File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 26
+    Warning (13410): Pin "LEDR[7]" is stuck at GND File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 26
 Info (286030): Timing-Driven Synthesis is running
-Warning (14632): Output pin "LEDR[9]" driven by bidirectional pin "GPIO[5]" cannot be tri-stated File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 26
-Info (17049): 8 registers lost all their fanouts during netlist optimizations.
+Info (17049): 5 registers lost all their fanouts during netlist optimizations.
 Info (144001): Generated suppressed messages file /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.map.smsg
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
@@ -510,15 +513,15 @@ Warning (21074): Design contains 14 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "SW[5]" File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 29
     Warning (15610): No output dependent on input pin "SW[6]" File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 29
     Warning (15610): No output dependent on input pin "SW[7]" File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 29
-Info (21057): Implemented 262 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 284 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 18 input pins
     Info (21059): Implemented 52 output pins
     Info (21060): Implemented 36 bidirectional pins
-    Info (21061): Implemented 156 logic cells
+    Info (21061): Implemented 178 logic cells
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 111 warnings
-    Info: Peak virtual memory: 719 megabytes
-    Info: Processing ended: Sun Feb 22 19:02:23 2026
-    Info: Elapsed time: 00:00:04
+    Info: Peak virtual memory: 725 megabytes
+    Info: Processing ended: Sun Feb 22 22:16:41 2026
+    Info: Elapsed time: 00:00:05
     Info: Total CPU time (on all processors): 00:00:09
 
 

@@ -1,0 +1,16 @@
+
+State Machine - |lab1_spart|driver:driver0|state
+Name state.TX state.RX state.POLL_TX_RX state.DIV_BUF_LOW state.DIV_BUF_HIGH state.TMP_DONE 
+state.DIV_BUF_HIGH 0 0 0 0 0 0 
+state.DIV_BUF_LOW 0 0 0 1 1 0 
+state.POLL_TX_RX 0 0 1 0 1 0 
+state.RX 0 1 0 0 1 0 
+state.TX 1 0 0 0 1 0 
+state.TMP_DONE 0 0 0 0 1 1 
+
+State Machine - |lab1_spart|spart:spart0|recieve:RX|curr_state
+Name curr_state.END_BIT curr_state.READING curr_state.START_BIT curr_state.IDLE 
+curr_state.IDLE 0 0 0 0 
+curr_state.START_BIT 0 0 1 1 
+curr_state.READING 0 1 0 1 
+curr_state.END_BIT 1 0 0 1 

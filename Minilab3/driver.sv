@@ -29,7 +29,7 @@ module driver(
     inout logic [7:0] databus
     );
 
-typedef enum reg [3:0] {DIV_BUF_HIGH, DIV_BUF_LOW, POLL_TX_RX, RX_WAIT, RX, RX_END, TX_WAIT, TX, TX_END} state_t;
+typedef enum reg [3:0] {DIV_BUF_HIGH, DIV_BUF_LOW, POLL_TX_RX, RX_WAIT, RX, RX_END, TX_WAIT, TX, TX_END, TMP_DONE} state_t;
 
 state_t state, nxt_state;
 
@@ -53,7 +53,7 @@ endgenerate
 
 always_comb begin
 case(br_cfg)
- 2'b00:  baud_rate = 16'd4800;
+ 2'b00:  baud_rate = 16'd651;
   2'b01:  baud_rate = 16'd9600;
         2'b10:  baud_rate = 16'd19200;
         2'b11:  baud_rate = 16'd38400;endcase
@@ -69,7 +69,7 @@ end
 always_comb begin
     nxt_state = state;
     databus = 'bz;
-    ioaddr = 2'b11;
+    ioaddr = 2'b01;
     iorw = 1'b1;    // 1 = read, 0 = write
     stash_databus = 1'b0;
 
@@ -92,12 +92,17 @@ always_comb begin
         POLL_TX_RX: begin
             ioaddr = 2'b01;
             iorw = 1'b1;
-            
+				
+				stash_databus = 1'b1;
+				
             if (rda) begin
                 nxt_state = RX;
                 stash_databus = 1'b1;
                 ioaddr = 2'b00;
             end
+				if (databus[7:4] == 4'h6) begin
+					nxt_state = TMP_DONE;
+				end
         end
 
         // Read the data from the slave
@@ -109,10 +114,10 @@ always_comb begin
 
             if (tbr) begin
                 ioaddr = 2'b00;
-                iorw = 1'b0;
-                databus = stash_databus;
+                iorw = 1'b1;
                 nxt_state = TX;
             end
+				
         end
 
         // Write the data to the slave
@@ -120,16 +125,26 @@ always_comb begin
             ioaddr = 2'b00;
             iorw = 1'b0;
 
-            databus = stash_databus;
+            databus = save_databus;//8'h66;
 
-            if (tbr) nxt_state = POLL_TX_RX;
+            if (tbr) nxt_state = TMP_DONE;
+				//if (databus[7:4] == 4'h6) begin
+				//	nxt_state = TMP_DONE;
+				//end
         end
+		TMP_DONE: begin
+			if(~rda) nxt_state = POLL_TX_RX;
+		end
+		default: begin
+			ioaddr = 2'b11;
+			iorw = 'b0;
+		end
     endcase
 end
 
 always_ff @(posedge clk, posedge rst) begin
     if (rst)
-        save_databus = 'b0;
+        save_databus = 8'h55;
     else if (stash_databus == 1'b1)
         save_databus = databus;
     else

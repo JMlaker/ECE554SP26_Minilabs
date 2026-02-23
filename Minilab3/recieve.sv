@@ -1,6 +1,6 @@
 `default_nettype none
 
-module recieve (
+module recieve_bak (
   input wire clk,
   input wire rst,
   input wire b_en,
@@ -42,7 +42,7 @@ end
 logic [3:0] bit_cnt;
 
 always_ff @(posedge clk) begin
-  unique case ({start,shift}) inside
+  unique case ({start,shift}) 
     2'b00: bit_cnt <= bit_cnt;
     2'b01: bit_cnt <= bit_cnt + 1;
     default: bit_cnt <= 4'h0;
@@ -68,7 +68,7 @@ always_comb begin
   recieving = 1'b0;
   start = 1'b0;
   set_rdy = 1'b0;
-  unique case (state) inside
+  unique case (state) 
     RECIEVE: begin
       // Contrary to TX which sends 10 bits, RX only needs
       // to "recieve" 9 bits so it doesn't catch the stop bit
@@ -95,12 +95,10 @@ end
 always_ff @(posedge clk, negedge rst) begin
   if (~rst)
     o_rda <= 1'b0;
-  else if (clr_rdy)
-    o_rda <= 1'b1;
   else if (set_rdy)
-    o_rda <= 1'b0;
+    o_rda <= 1'b1;
 	else if (start)
-		o_rda <= 1'b1;
+		o_rda <= 1'b0;
 end
 
 /////////////////////////////
@@ -116,7 +114,7 @@ assign shift = b_en;
 logic [8:0] rx_shft_reg;
 
 always_ff @(posedge clk) begin
-  unique case ({shift}) inside
+  unique case ({shift}) 
     1'b1: rx_shft_reg <= {RX_stable, rx_shft_reg[8:1]};
     default: rx_shft_reg <= rx_shft_reg;
   endcase

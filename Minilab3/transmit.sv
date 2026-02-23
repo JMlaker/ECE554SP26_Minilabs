@@ -20,10 +20,23 @@ logic shift, load, transmitting;
 // Bit Counter
 /////////////////////////////
 
+reg[3:0] divcnt;
+always @(posedge clk, negedge rst) begin
+	if(~rst) begin
+		divcnt <= 4'h0;
+	end else begin
+		if(load) begin
+			divcnt <= 4'h0;
+		end else if(b_en) begin
+			divcnt++;
+		end
+	end
+end
+
 logic [3:0] bit_cnt;
 
 always_ff @(posedge clk) begin
-    unique case ({load,shift}) inside
+    unique case ({load,shift}) 
         2'b00: bit_cnt <= bit_cnt;
         2'b01: bit_cnt <= bit_cnt + 1;
         default: bit_cnt <= 4'h0;
@@ -49,7 +62,7 @@ always_comb begin
     transmitting = 1'b0;
     load = 1'b0;
     set_done = 1'b0;
-    unique case (state) inside
+    unique case (state) 
         TRANS: begin
             if (bit_cnt == 4'b1010) begin
                 nxt_state = IDLE;
@@ -72,19 +85,19 @@ always_comb begin
 end
 
 always_ff @(posedge clk, negedge rst) begin
-    if (~rst)
-        tx_done <= 1'b1;
+   if (~rst)
+        o_tbr <= 1'b1;
     else if (set_done)
-        tx_done <= 1'b1;
+        o_tbr <= 1'b1;
 	else if (load)
-		tx_done <= 1'b0;
+		  o_tbr <= 1'b0;
 end
 
 /////////////////////////////
 // Baud/Shift logic
 /////////////////////////////
 
-assign shift = b_en;
+assign shift = b_en && divcnt==4'hF;
 
 /////////////////////////////
 // Serial Out
@@ -93,18 +106,16 @@ assign shift = b_en;
 logic [8:0] tx_shft_reg;
 
 always_ff @(posedge clk) begin
-    if (~rst_n)
+    if (~rst)
         tx_shft_reg <= '1;
     else begin
-        unique case ({load,shift}) inside
+        unique case ({load,shift}) 
             2'b00: tx_shft_reg <= tx_shft_reg;
             2'b01: tx_shft_reg <= {1'b1, tx_shft_reg[8:1]};
             default: tx_shft_reg <= {i_data, 1'b0};
 		endcase
     end
 end
-
-assign o_tbr == (state == IDLE);
 
 assign o_tx = tx_shft_reg[0];
 
