@@ -1,149 +1,112 @@
+`default_nettype none
+
 module transmit (
-    input wire clk,
-    input wire [7:0] i_data,
-    input wire rst,
-    input wire b_en,
-    input wire i_iocs,
-    output logic o_tx,
-    input wire i_iorw,
-    output wire o_tbr
+  input wire clk,
+  input wire rst, 
+  input wire [7:0] i_data, 
+  input wire b_en, 
+  input wire i_iocs, 
+  input wire i_iorw, 
+  output logic o_tx, 
+  output wire o_tbr
 );
-  localparam IDLE = 2'b00;
-  localparam START_BIT = 2'b01;
-  localparam TRANSMIT = 2'b10;
-  localparam END_BIT = 2'b11;
-  logic [1:0] curr_state, next_state;
-  //counter to keep track of 8 bits to be transmitted
-  logic [3:0] counter;
 
-  //counter that counts to the "middle" of the 
-  //start bit (high to low transition)
-  logic [3:0] start_counter;
 
-  //holds each bit for 16 cycles(?) (oversampling of 16)
-  logic [3:0] t_counter;
-  reg   [7:0] buffer;
+typedef enum {IDLE, TRANS} state_t;
 
-  //recall that the tx transmission occurs as the following
-  //1) see if the bus is transfering something to the recieve unit; i.e,
-  //i_iorw==1 and i_iocs=1. if so, move it into the buffer. 
-  //once in the buffer, begin the transmission sequence of...
-  //i) se o_tx from 1->0 for 1 baud cycle (or 16 pulses, because its being
-  //oversampled by a rate of 16?)
-  //ii) serially shift out the values in the buffer (holding each for 16 baud
-  //pulses?)
-  //iii) once all 8 have been transfered out, hold it high for 16 baud pulses
-  //to indicate the end of a transmission cycle
+logic shift, load, transmitting;
 
-  always @(posedge clk) begin
-    if (!rst) curr_state <= 2'b00;
-    else if (b_en) curr_state <= next_state;
-  end
+/////////////////////////////
+// Bit Counter
+/////////////////////////////
 
-  always_comb begin
-    next_state = IDLE;
-    case (curr_state)
-      //if i_iocs and i_iorw are enabled, then transition into the START_BIT
-      //state?
-      IDLE: begin
-        if (i_iocs && i_iorw) next_state = START_BIT;
-        else next_state = IDLE;
-      end
-      START_BIT: begin
-        //if 16 baud pulses have passed, start transmiting actual data?
-        if (start_counter == 4'b1111) next_state = TRANSMIT;
-        else next_state = START_BIT;
-      end
-      TRANSMIT: begin
-        if (counter != 4'd8) next_state = TRANSMIT;
-        else next_state = END_BIT;
-      end
-      END_BIT: begin
-        if (start_counter == 4'b1111) next_state = IDLE;
-        else next_state = END_BIT;
-      end
-    endcase
-  end
+logic [3:0] bit_cnt;
 
-  //transmit module should be ready/available to recieve data any time its in
-  //the IDLE state?
-  reg tbr;
-  assign o_tbr = tbr;
+always_ff @(posedge clk) begin
+    unique case ({load,shift}) inside
+        2'b00: bit_cnt <= bit_cnt;
+        2'b01: bit_cnt <= bit_cnt + 1;
+        default: bit_cnt <= 4'h0;
+	endcase
+end
 
-  //o_tbr logic
-  always @(posedge clk) begin
-    if (!rst) tbr <= 1'b0;
+/////////////////////////////
+// State Machine
+/////////////////////////////
+
+state_t state, nxt_state;
+logic set_done;
+
+always_ff @(posedge clk, negedge rst) begin
+    if (~rst)
+        state <= IDLE;
+    else
+        state <= nxt_state;
+end
+
+always_comb begin
+    nxt_state = state;
+    transmitting = 1'b0;
+    load = 1'b0;
+    set_done = 1'b0;
+    unique case (state) inside
+        TRANS: begin
+            if (bit_cnt == 4'b1010) begin
+                nxt_state = IDLE;
+                set_done = 1'b1;
+            end
+            else begin
+                transmitting = 1'b1;
+                nxt_state = TRANS;
+            end
+        end
+		// Default = IDLE
+        default: begin
+			if (i_iocs && i_iorw) begin
+				nxt_state = TRANS;
+				load = 1'b1;
+			end else
+				nxt_state = IDLE;
+        end
+	endcase
+end
+
+always_ff @(posedge clk, negedge rst) begin
+    if (~rst)
+        tx_done <= 1'b1;
+    else if (set_done)
+        tx_done <= 1'b1;
+	else if (load)
+		tx_done <= 1'b0;
+end
+
+/////////////////////////////
+// Baud/Shift logic
+/////////////////////////////
+
+assign shift = b_en;
+
+/////////////////////////////
+// Serial Out
+/////////////////////////////
+
+logic [8:0] tx_shft_reg;
+
+always_ff @(posedge clk) begin
+    if (~rst_n)
+        tx_shft_reg <= '1;
     else begin
-      //only update the tbr during baud pulses...?
-      if (b_en) begin
-        if (curr_state == IDLE) tbr <= 1'b1;
-        else tbr <= 1'b0;
-      end
+        unique case ({load,shift}) inside
+            2'b00: tx_shft_reg <= tx_shft_reg;
+            2'b01: tx_shft_reg <= {1'b1, tx_shft_reg[8:1]};
+            default: tx_shft_reg <= {i_data, 1'b0};
+		endcase
     end
-  end
+end
 
-  always @(posedge clk) begin
-    if (!rst) begin
-      counter <= 4'b0;
-      start_counter <= 4'b0;
-      t_counter <= 4'b0;
-      buffer <= 7'b0;
-    end else begin
-      if (b_en) begin
-        case (curr_state)
-          IDLE: begin
-            counter <= 4'b0;
-            start_counter <= 4'b0;
-            t_counter <= 4'b0;
-            //if current state is IDLE, the chip is selected, and the transmit
-            //module is selected, assume we're going to load something in?
-            if (i_iocs && i_iorw) begin
-              buffer <= i_data;
-            end else begin
-              buffer <= 7'b0;
-            end
-          end
-          //transmit a 16 buad-pulse long 0 bit?
-          START_BIT: begin
-            counter <= 4'b0;
-            start_counter <= start_counter + 1;
-            t_counter <= 4'b0;
-            buffer<=buffer;
-          end
-          TRANSMIT: begin
-            start_counter <= 4'b0;
-            if (t_counter == 4'b1111) begin
-              counter   <= counter + 1;
-              t_counter <= 4'b0;
-            end else begin
-              t_counter <= t_counter + 1;
-            end
-          end
-          END_BIT: begin
-            counter<='b0;
-            start_counter <= start_counter + 1;
-            t_counter <= 4'b0;
-          end
-        endcase
-      end
-    end
-  end
+assign o_tbr == (state == IDLE);
 
-  //o_tx logic
-  always_comb begin
-    case (curr_state)
-      IDLE: begin
-        o_tx = 1'b1;
-      end
-      START_BIT: begin
-        o_tx = 1'b0;
-      end
-      TRANSMIT: begin
-        o_tx = buffer[counter];
-      end
-      END_BIT: begin
-        o_tx = 1'b1;
-      end
-    endcase
-  end
+assign o_tx = tx_shft_reg[0];
+
+
 endmodule

@@ -1,138 +1,129 @@
-//for recieving, when a transition from 1->0 is detected, this is considered
-//the start bit;
-//after this, 8 bits of data are recieved
-//after this, remain at 1
+`default_nettype none
+
 module recieve (
-    input wire clk,
-    //NOTE: ONLY SAMPLE WHEN b_en IS HIGH!
-    input wire b_en,
-    input wire rst,
-    input wire i_iocs,
-    input wire i_rx,
-    input wire i_iorw,
-    //Receive Data Available: indicates that a byte of data has been recieved
-    //and is ready to be read from the SPART to the processor. 
-    output wire o_rda,
-    output wire [7:0] o_data
+  input wire clk,
+  input wire rst,
+  input wire b_en,
+  input wire i_iocs,
+  input wire i_rx,
+  input wire i_iorw,
+  output wire o_rda,
+  output wire [7:0] o_data
 );
-  localparam IDLE = 2'b00;
-  localparam START_BIT = 2'b01;
-  localparam READING = 2'b10;
-  localparam END_BIT = 2'b11;
-  logic [1:0] curr_state, next_state;
-  logic [3:0] counter;
-  //NOTE: n=4, hence oversampling of 16!!!!
-  logic [2:0] start_counter;
-  logic [3:0] t_counter;
-  reg [7:0] buffer;
-  reg i_rx_reg;
 
-  assign o_data = buffer;
+typedef enum {IDLE, RECIEVE} state_t;
 
-  always @(posedge clk) begin
-    if (!rst) i_rx_reg <= 1'b0;
-    else if(b_en) i_rx_reg <= i_rx;
-  end
+logic shift, start, recieving;
 
-  //next_state logic
-  //once we detect a negedge on i_rx, wait 2 baud cycles to transition?
-  wire neg_rx_edge;
+/////////////////////////////
+// Resolve Meta-Stability
+/////////////////////////////
 
-  assign neg_rx_edge=(i_rx==1'b0 && i_rx_reg==1'b1);
-  
-  always_comb begin
-    //idle state
-    next_state = 2'b00;
-    case (curr_state)
-      //if current state is IDLE and reciever samples a 0, transition to
-      //START_BIT
-      IDLE: begin
-        if (neg_rx_edge) next_state = START_BIT;
-        else next_state = IDLE;
+logic RX_synch, RX_stable;
+
+always_ff @(posedge clk, negedge rst) begin
+  if (~rst)
+    RX_synch <= 1'b1;
+  else
+    RX_synch <= i_rx;
+end
+
+always_ff @(posedge clk, negedge rst) begin
+  if (~rst)
+    RX_stable <= 1'b1;
+  else
+    RX_stable <= RX_synch;
+end
+
+/////////////////////////////
+// Bit Counter
+/////////////////////////////
+
+logic [3:0] bit_cnt;
+
+always_ff @(posedge clk) begin
+  unique case ({start,shift}) inside
+    2'b00: bit_cnt <= bit_cnt;
+    2'b01: bit_cnt <= bit_cnt + 1;
+    default: bit_cnt <= 4'h0;
+	endcase
+end
+
+/////////////////////////////
+// State Machine
+/////////////////////////////
+
+state_t state, nxt_state;
+logic set_rdy;
+
+always_ff @(posedge clk, negedge rst) begin
+  if (~rst)
+    state <= IDLE;
+  else
+    state <= nxt_state;
+end
+
+always_comb begin
+  nxt_state = state;
+  recieving = 1'b0;
+  start = 1'b0;
+  set_rdy = 1'b0;
+  unique case (state) inside
+    RECIEVE: begin
+      // Contrary to TX which sends 10 bits, RX only needs
+      // to "recieve" 9 bits so it doesn't catch the stop bit
+      if (bit_cnt == 4'b1001) begin
+        nxt_state = IDLE;
+        set_rdy = 1'b1;
       end
-      START_BIT: begin
-        if (start_counter == 3'b111) next_state = READING;
-        else next_state = START_BIT;
-      end
-      READING: begin
-        if (counter != 4'd8) next_state = READING;
-        else next_state = END_BIT;
-      end
-      END_BIT: begin
-        if (start_counter == 3'b111) next_state = IDLE;
-        else next_state = END_BIT;
-      end
-    endcase
-  end
-
-  //when transitioning from END_BIT to IDLE, indicates a read has been
-  //completed
-  //when iorw==1, indicates a read. set o_rda to 0 once this read has been
-  //completed?
-  reg rda;
-  assign o_rda = rda;
-  always @(posedge clk) begin
-    if (!rst) rda <= 1'b0;
-    else begin
-      if (b_en) begin
-        if (curr_state == END_BIT && next_state == IDLE) rda <= 1'b1;
-        //if (i_iocs && i_iorw == 1'b1) rda <= 1'b0;
-        else rda<=1'b0;
-      end
-    end
-  end
-
-  always @(posedge clk) begin
-    if (!rst) curr_state <= IDLE;
-    else begin
-      if (b_en) begin
-        curr_state <= next_state;
+      else begin
+        recieving = 1'b1;
+        nxt_state = RECIEVE;
       end
     end
-  end
-
-  //TODO: check if i_rx is maintained at 0 to check for noise?
-  always @(posedge clk) begin
-    if (!rst) begin
-      buffer <= 8'b0;
-      counter <= 4'b0;
-      start_counter <= 3'b0;
-      t_counter <= 0;
-    end else begin
-      if (b_en) begin
-        case (curr_state)
-          IDLE: begin
-            buffer <= buffer;
-            counter <= 4'b0;
-            t_counter <= 0;
-            start_counter <= 0;
-          end
-          START_BIT: begin
-            buffer <= buffer;
-            counter <= 4'b0;
-            start_counter <= start_counter + 1;
-            t_counter <= 0;
-          end
-          READING: begin
-            start_counter <= 0;
-            //check to be in the middle of the bit
-            if (t_counter == 4'b1111) begin
-              buffer <= {i_rx,buffer[7:1]};
-              counter <= counter + 1;
-              t_counter <= 0;
-            end else begin
-              t_counter <= t_counter + 1;
-            end
-          end
-          END_BIT: begin
-            buffer <= buffer;
-            start_counter <= start_counter + 1;
-            t_counter <= 0;
-          end
-        endcase
-      end
+    // Default = IDLE
+    default: begin
+      if (~RX_stable) begin
+        nxt_state = RECIEVE;
+        start = 1'b1;
+      end else
+        nxt_state = IDLE;
     end
-  end
+endcase
+end
+
+always_ff @(posedge clk, negedge rst) begin
+  if (~rst)
+    o_rda <= 1'b0;
+  else if (clr_rdy)
+    o_rda <= 1'b1;
+  else if (set_rdy)
+    o_rda <= 1'b0;
+	else if (start)
+		o_rda <= 1'b1;
+end
+
+/////////////////////////////
+// Baud/Shift logic
+/////////////////////////////
+
+assign shift = b_en;
+
+/////////////////////////////
+// Serial Input
+/////////////////////////////
+
+logic [8:0] rx_shft_reg;
+
+always_ff @(posedge clk) begin
+  unique case ({shift}) inside
+    1'b1: rx_shft_reg <= {RX_stable, rx_shft_reg[8:1]};
+    default: rx_shft_reg <= rx_shft_reg;
+  endcase
+end
+
+assign o_data = rx_shft_reg[7:0];
 
 endmodule
 
+`default_nettype wire
