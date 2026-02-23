@@ -18,29 +18,29 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module driver(
-    input clk,
-    input rst,
-    input [1:0] br_cfg,
-    output iocs,
-    output iorw,
-    input rda,
-    input tbr,
+    input wire clk,
+    input wire rst,
+    input wire [1:0] br_cfg,
+    output logic iocs,
+    output logic iorw,
+    input wire rda,
+    input wire tbr,
     output logic [1:0] ioaddr,
-    inout [7:0] databus
+    inout logic [7:0] databus
     );
 
-typedef enum reg [2:0] {DIV_BUF_HIGH, DIV_BUF_LOW, POLL_TX_RX, RX_WAIT, RX, RX_END, TX_WAIT, TX, TX_END} state_t;
+typedef enum reg [3:0] {DIV_BUF_HIGH, DIV_BUF_LOW, POLL_TX_RX, RX_WAIT, RX, RX_END, TX_WAIT, TX, TX_END} state_t;
 
 state_t state, nxt_state;
 
-wire [15:0] baud_rate;
+logic [15:0] baud_rate;
 
 logic stash_databus;
 
 logic [7:0] save_databus;
 
-assert iocs = 1'b1; // assumed held high
-
+assign iocs = 1'b1; // assumed held high
+/*
 generate
     case (br_cfg)
         2'b00: assign baud_rate = 16'd4800;
@@ -49,6 +49,15 @@ generate
         2'b11: assign baud_rate = 16'd38400;
     endcase
 endgenerate
+*/
+
+always_comb begin
+case(br_cfg)
+ 2'b00:  baud_rate = 16'd4800;
+  2'b01:  baud_rate = 16'd9600;
+        2'b10:  baud_rate = 16'd19200;
+        2'b11:  baud_rate = 16'd38400;endcase
+end
 
 always_ff @(posedge clk, posedge rst) begin
     if (rst)
@@ -102,7 +111,7 @@ always_comb begin
                 ioaddr = 2'b00;
                 iorw = 1'b0;
                 databus = stash_databus;
-                nxt_state = TX
+                nxt_state = TX;
             end
         end
 
@@ -121,7 +130,7 @@ end
 always_ff @(posedge clk, posedge rst) begin
     if (rst)
         save_databus = 'b0;
-    else if (stash_databus = 1'b1)
+    else if (stash_databus == 1'b1)
         save_databus = databus;
     else
         save_databus = save_databus;
