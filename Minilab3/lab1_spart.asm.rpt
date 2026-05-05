@@ -1,5 +1,5 @@
 Assembler report for lab1_spart
-Sun Feb 22 22:17:02 2026
+Tue Feb 24 15:59:02 2026
 Quartus Prime Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
 
 
@@ -38,7 +38,7 @@ on the Quartus Prime software download page.
 +---------------------------------------------------------------+
 ; Assembler Summary                                             ;
 +-----------------------+---------------------------------------+
-; Assembler Status      ; Successful - Sun Feb 22 22:17:02 2026 ;
+; Assembler Status      ; Successful - Tue Feb 24 15:59:02 2026 ;
 ; Revision Name         ; lab1_spart                            ;
 ; Top-level Entity Name ; lab1_spart                            ;
 ; Family                ; Cyclone V                             ;
@@ -67,8 +67,8 @@ on the Quartus Prime software download page.
 +----------------+-------------------------+
 ; Option         ; Setting                 ;
 +----------------+-------------------------+
-; JTAG usercode  ; 0x00B2F341              ;
-; Checksum       ; 0x00B2F341              ;
+; JTAG usercode  ; 0x00B2CCA5              ;
+; Checksum       ; 0x00B2CCA5              ;
 +----------------+-------------------------+
 
 
@@ -78,14 +78,14 @@ on the Quartus Prime software download page.
 Info: *******************************************************************
 Info: Running Quartus Prime Assembler
     Info: Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
-    Info: Processing started: Sun Feb 22 22:16:59 2026
+    Info: Processing started: Tue Feb 24 15:58:57 2026
 Info: Command: quartus_asm --read_settings_files=off --write_settings_files=off lab1_spart -c lab1_spart
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (115030): Assembler is generating device programming files
 Info: Quartus Prime Assembler was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 740 megabytes
-    Info: Processing ended: Sun Feb 22 22:17:02 2026
-    Info: Elapsed time: 00:00:03
-    Info: Total CPU time (on all processors): 00:00:03
+    Info: Peak virtual memory: 737 megabytes
+    Info: Processing ended: Tue Feb 24 15:59:02 2026
+    Info: Elapsed time: 00:00:05
+    Info: Total CPU time (on all processors): 00:00:04
 
 

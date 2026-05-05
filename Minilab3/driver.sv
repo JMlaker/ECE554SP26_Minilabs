@@ -54,9 +54,9 @@ endgenerate
 always_comb begin
 case(br_cfg)
  2'b00:  baud_rate = 16'd651;
-  2'b01:  baud_rate = 16'd9600;
-        2'b10:  baud_rate = 16'd19200;
-        2'b11:  baud_rate = 16'd38400;endcase
+  2'b01:  baud_rate = 16'd326;
+        2'b10:  baud_rate = 16'd163;
+        2'b11:  baud_rate = 16'd81;endcase
 end
 
 always_ff @(posedge clk, posedge rst) begin

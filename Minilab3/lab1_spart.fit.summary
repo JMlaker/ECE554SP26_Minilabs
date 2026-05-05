@@ -1,12 +1,12 @@
-Fitter Status : Successful - Sun Feb 22 22:16:58 2026
+Fitter Status : Successful - Tue Feb 24 15:58:56 2026
 Quartus Prime Version : 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
 Revision Name : lab1_spart
 Top-level Entity Name : lab1_spart
 Family : Cyclone V
 Device : 5CSEMA5F31C6
 Timing Models : Final
-Logic utilization (in ALMs) : 93 / 32,070 ( < 1 % )
-Total registers : 93
+Logic utilization (in ALMs) : 88 / 32,070 ( < 1 % )
+Total registers : 97
 Total pins : 106 / 457 ( 23 % )
 Total virtual pins : 0
 Total block memory bits : 0 / 4,065,280 ( 0 % )

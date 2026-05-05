@@ -1,5 +1,5 @@
 Analysis & Synthesis report for lab1_spart
-Sun Feb 22 22:16:41 2026
+Tue Feb 24 15:58:28 2026
 Quartus Prime Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
 
 
@@ -49,7 +49,7 @@ on the Quartus Prime software download page.
 +-----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Sun Feb 22 22:16:41 2026           ;
+; Analysis & Synthesis Status     ; Successful - Tue Feb 24 15:58:28 2026           ;
 ; Quartus Prime Version           ; 25.1std.0 Build 1129 10/21/2025 SC Lite Edition ;
 ; Revision Name                   ; lab1_spart                                      ;
 ; Top-level Entity Name           ; lab1_spart                                      ;
@@ -192,14 +192,14 @@ on the Quartus Prime software download page.
 +---------------------------------------------+----------------+
 ; Resource                                    ; Usage          ;
 +---------------------------------------------+----------------+
-; Estimate of Logic utilization (ALMs needed) ; 96             ;
+; Estimate of Logic utilization (ALMs needed) ; 89             ;
 ;                                             ;                ;
-; Combinational ALUT usage for logic          ; 147            ;
+; Combinational ALUT usage for logic          ; 133            ;
 ;     -- 7 input functions                    ; 0              ;
-;     -- 6 input functions                    ; 42             ;
-;     -- 5 input functions                    ; 31             ;
-;     -- 4 input functions                    ; 27             ;
-;     -- <=3 input functions                  ; 47             ;
+;     -- 6 input functions                    ; 41             ;
+;     -- 5 input functions                    ; 20             ;
+;     -- 4 input functions                    ; 31             ;
+;     -- <=3 input functions                  ; 41             ;
 ;                                             ;                ;
 ; Dedicated logic registers                   ; 90             ;
 ;                                             ;                ;
@@ -209,8 +209,8 @@ on the Quartus Prime software download page.
 ;                                             ;                ;
 ; Maximum fan-out node                        ; CLOCK_50~input ;
 ; Maximum fan-out                             ; 90             ;
-; Total fan-out                               ; 1090           ;
-; Average fan-out                             ; 2.25           ;
+; Total fan-out                               ; 1033           ;
+; Average fan-out                             ; 2.19           ;
 +---------------------------------------------+----------------+
 
 
@@ -219,12 +219,12 @@ on the Quartus Prime software download page.
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------------------------+-------------+--------------+
 ; Compilation Hierarchy Node ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                   ; Entity Name ; Library Name ;
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------------------------+-------------+--------------+
-; |lab1_spart                ; 147 (40)            ; 90 (0)                    ; 0                 ; 0          ; 106  ; 0            ; |lab1_spart                           ; lab1_spart  ; work         ;
-;    |driver:driver0|        ; 10 (10)             ; 14 (14)                   ; 0                 ; 0          ; 0    ; 0            ; |lab1_spart|driver:driver0            ; driver      ; work         ;
-;    |spart:spart0|          ; 97 (4)              ; 76 (0)                    ; 0                 ; 0          ; 0    ; 0            ; |lab1_spart|spart:spart0              ; spart       ; work         ;
-;       |brg:baud_gen|       ; 43 (43)             ; 32 (32)                   ; 0                 ; 0          ; 0    ; 0            ; |lab1_spart|spart:spart0|brg:baud_gen ; brg         ; work         ;
+; |lab1_spart                ; 133 (30)            ; 90 (0)                    ; 0                 ; 0          ; 106  ; 0            ; |lab1_spart                           ; lab1_spart  ; work         ;
+;    |driver:driver0|        ; 11 (11)             ; 14 (14)                   ; 0                 ; 0          ; 0    ; 0            ; |lab1_spart|driver:driver0            ; driver      ; work         ;
+;    |spart:spart0|          ; 92 (3)              ; 76 (0)                    ; 0                 ; 0          ; 0    ; 0            ; |lab1_spart|spart:spart0              ; spart       ; work         ;
+;       |brg:baud_gen|       ; 40 (40)             ; 32 (32)                   ; 0                 ; 0          ; 0    ; 0            ; |lab1_spart|spart:spart0|brg:baud_gen ; brg         ; work         ;
 ;       |recieve:RX|         ; 24 (24)             ; 25 (25)                   ; 0                 ; 0          ; 0    ; 0            ; |lab1_spart|spart:spart0|recieve:RX   ; recieve     ; work         ;
-;       |transmit:TX|        ; 26 (26)             ; 19 (19)                   ; 0                 ; 0          ; 0    ; 0            ; |lab1_spart|spart:spart0|transmit:TX  ; transmit    ; work         ;
+;       |transmit:TX|        ; 25 (25)             ; 19 (19)                   ; 0                 ; 0          ; 0    ; 0            ; |lab1_spart|spart:spart0|transmit:TX  ; transmit    ; work         ;
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------------------------+-------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
@@ -292,10 +292,10 @@ Encoding Type:  One-Hot
 +----------------------------------------+---------+
 ; Inverted Register                      ; Fan out ;
 +----------------------------------------+---------+
-; spart:spart0|transmit:TX|o_tbr         ; 8       ;
-; driver:driver0|save_databus[4]         ; 1       ;
+; spart:spart0|transmit:TX|o_tbr         ; 9       ;
+; driver:driver0|save_databus[4]         ; 2       ;
 ; driver:driver0|save_databus[6]         ; 1       ;
-; driver:driver0|save_databus[2]         ; 1       ;
+; driver:driver0|save_databus[2]         ; 2       ;
 ; driver:driver0|save_databus[0]         ; 1       ;
 ; Total number of inverted registers = 5 ;         ;
 +----------------------------------------+---------+
@@ -316,8 +316,8 @@ Encoding Type:  One-Hot
 ; 4:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |lab1_spart|spart:spart0|transmit:TX|tx_shft_reg[1]    ;
 ; 5:1                ; 4 bits    ; 12 LEs        ; 8 LEs                ; 4 LEs                  ; Yes        ; |lab1_spart|spart:spart0|recieve:RX|t_counter[1]       ;
 ; 3:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |lab1_spart|spart:spart0|recieve:RX|curr_state         ;
-; 5:1                ; 4 bits    ; 12 LEs        ; 12 LEs               ; 0 LEs                  ; No         ; |lab1_spart|databus[2]                                 ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |lab1_spart|databus[3]                                 ;
+; 5:1                ; 6 bits    ; 18 LEs        ; 18 LEs               ; 0 LEs                  ; No         ; |lab1_spart|databus[2]                                 ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |lab1_spart|databus[1]                                 ;
 ; 7:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |lab1_spart|driver:driver0|Selector4                   ;
 ; 9:1                ; 2 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; No         ; |lab1_spart|driver:driver0|Selector6                   ;
 ; 8:1                ; 2 bits    ; 10 LEs        ; 6 LEs                ; 4 LEs                  ; No         ; |lab1_spart|driver:driver0|Selector3                   ;
@@ -338,21 +338,21 @@ Encoding Type:  One-Hot
 ;     SLD               ; 2                           ;
 ;     plain             ; 8                           ;
 ; arriav_io_obuf        ; 36                          ;
-; arriav_lcell_comb     ; 154                         ;
+; arriav_lcell_comb     ; 140                         ;
 ;     arith             ; 16                          ;
 ;         1 data inputs ; 16                          ;
-;     normal            ; 138                         ;
+;     normal            ; 124                         ;
 ;         0 data inputs ; 2                           ;
 ;         1 data inputs ; 10                          ;
-;         2 data inputs ; 13                          ;
+;         2 data inputs ; 7                           ;
 ;         3 data inputs ; 13                          ;
-;         4 data inputs ; 27                          ;
-;         5 data inputs ; 31                          ;
-;         6 data inputs ; 42                          ;
+;         4 data inputs ; 31                          ;
+;         5 data inputs ; 20                          ;
+;         6 data inputs ; 41                          ;
 ; boundary_port         ; 106                         ;
 ;                       ;                             ;
-; Max LUT depth         ; 4.00                        ;
-; Average LUT depth     ; 2.25                        ;
+; Max LUT depth         ; 3.50                        ;
+; Average LUT depth     ; 2.08                        ;
 +-----------------------+-----------------------------+
 
 
@@ -371,7 +371,7 @@ Encoding Type:  One-Hot
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
-    Info: Processing started: Sun Feb 22 22:16:36 2026
+    Info: Processing started: Tue Feb 24 15:58:22 2026
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off lab1_spart -c lab1_spart
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 8 of the 8 processors detected
@@ -513,16 +513,16 @@ Warning (21074): Design contains 14 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "SW[5]" File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 29
     Warning (15610): No output dependent on input pin "SW[6]" File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 29
     Warning (15610): No output dependent on input pin "SW[7]" File: /home/michael2/Documents/ECE554SP26_Minilabs/Minilab3/lab1_spart.v Line: 29
-Info (21057): Implemented 284 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 270 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 18 input pins
     Info (21059): Implemented 52 output pins
     Info (21060): Implemented 36 bidirectional pins
-    Info (21061): Implemented 178 logic cells
+    Info (21061): Implemented 164 logic cells
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 111 warnings
-    Info: Peak virtual memory: 725 megabytes
-    Info: Processing ended: Sun Feb 22 22:16:41 2026
-    Info: Elapsed time: 00:00:05
-    Info: Total CPU time (on all processors): 00:00:09
+    Info: Peak virtual memory: 731 megabytes
+    Info: Processing ended: Tue Feb 24 15:58:28 2026
+    Info: Elapsed time: 00:00:06
+    Info: Total CPU time (on all processors): 00:00:13
 
 
 +------------------------------------------+
